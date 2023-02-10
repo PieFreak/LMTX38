@@ -1,10 +1,8 @@
 import express from "express";
-import { userRouter } from "./router/UserRouter.js";
+import { app } from "./start.js";
 
-const app = express();
+const PORT = 5000;
 
-
-app.use(express.json());
-app.use("/", userRouter);
-
-app.listen(5000, () => {console.log("Server started on port 5000")});
+app.listen(PORT, () => {
+    console.log(`Server started on port ${PORT}`);
+});
