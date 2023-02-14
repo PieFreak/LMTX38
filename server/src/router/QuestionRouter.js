@@ -1,4 +1,5 @@
 import express from "express";
+import { makeQuestionService } from "../service/QuestionService.js";
 
 export const questionRouter = express.Router();
 
