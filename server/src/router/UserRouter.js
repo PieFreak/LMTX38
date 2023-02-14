@@ -1,15 +1,29 @@
 import express from "express";
+import { makeUserService } from "../service/UserService.js";
 
 export const userRouter = express.Router();
 
 const userService = makeUserService();
 
+
+/**
+ * Post call for creating a user
+ */
+userRouter.post("/create", async (req, res) => {
+    try {
+        const {username, email, password} = req.body;
+        const new_user = await userService.createUser(username, email, password);
+        res.status(201).send(new_user);
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+})
 /**
  * Get call for all users in the database
  */
 userRouter.get("/all", async (req, res) => {
     try {
-        const users = await userService.getUsers();
+        const users = await userService.getUser();
         res.status(200).send(users);
     } catch (err) {
         res.status(500).send(err.message);
