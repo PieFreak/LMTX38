@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import LoginForm from "../components/LoginForm";
 import RegisterForm from "../components/RegisterForm";
-import BackButton from '../components/BackButton';
+import BackButton from '../components/buttons/BackButton';
 
 export default function Entry() {
 

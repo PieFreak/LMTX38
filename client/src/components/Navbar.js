@@ -33,7 +33,7 @@ export default function Navbar() {
       <ul className={`md:flex md:items-center md:pb-0 pb-12 absolute md:static bg-white md:z-auto left-0 w-full md:w-auto md:pl-0 pl-9 ${open ? 'top-20 ':'top-[-490px]'}`}>
         {
           links.map(({title, link}) => (
-          <li key={title} className={`md:ml-8 text-xl md:my-0 my-7 ${link === location.pathname ? "border-b-2 border-blue-500" : ""}`}>
+          <li key={title} className={`md:ml-8 text-xl md:my-0 my-7 ${link === location.pathname ? "md:border-b-2 md:border-blue-500" : ""}`}>
             <NavLink to={link} className="text-xl hover:text-blue-500">
               {title}
             </NavLink>

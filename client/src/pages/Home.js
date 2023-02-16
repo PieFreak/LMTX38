@@ -4,12 +4,18 @@ import Footer from "../components/Footer"
 
 export default function Home() {
   return (
-    <div className="h-screen flex flex-col bg-no-repeat bg-cover bg-center bg-[url('https://upload.wikimedia.org/wikipedia/commons/0/05/H%C3%B6gskoleprovets_fr%C3%A5geformul%C3%A4r.jpg')] z-[-10]">
-      <Navbar/>
-      <NavLink to='/entry' className="mx-auto mt-20 px-10 py-6 md:px-16 md:py-9 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-2xl md:text-4xl transition-all duration-150">
-        Kom igång!
+    <div className="h-full min-h-screen flex flex-col  bg-indigo-50">
+      <h1 className="flex items-center justify-center my-2 pt-10 pb-5 text-center font-extrabold text-transparent bg-gradient-to-r bg-clip-text from-green-400 to-indigo-400 text-3xl sm:text-5xl md:text-6xl">
+        Högskoleprovet
+      </h1>
+      <NavLink to='/entry' className="mx-auto mt-20 px-6 py-4 md:px-9 md:py-6 rounded-xl bg-indigo-100 hover:bg-indigo-200 border-2 border-indigo-200 text-indigo-800 text-2xl md:text-4xl transition-all duration-300 shadow-2xl hover:shadow-lg">
+        <h3>Kom igång</h3>
       </NavLink>
+      <h4 className="flex items-center justify-center mx-5 py-20 text-center text-indigo-900 text-base md:text-l">
+        Ett enklare sätt att öva inför högskoleprovet.
+      </h4>
       <Footer/>
     </div>
+    
     )
   }
