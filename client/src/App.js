@@ -1,6 +1,7 @@
 import './App.css';
 import Home from './pages/Home';
-import Entry from './pages/Entry';
+import Login from './pages/Login';
+import Register from './pages/Register';
 import GamePlay from './pages/GamePlay';
 import About from './pages/About';
 import Profile from './pages/Profile';
@@ -16,13 +17,15 @@ function App() {
   return (
     <Routes>
       <Route path='/' element={<Home/>}/>
-      <Route path='/entry' element={<Entry/>}/>
+      <Route path='/login' element={<Login/>}/>
+      <Route path='/register' element={<Register/>}/>
       <Route path='/gameplay' element={<GamePlay/>}/>
       <Route path='/about' element={<About/>}/>
       <Route path='/profile' element={<Profile/>}/>
       <Route path='/gameoverview' element={<GameOverview/>}/>
       <Route path='/result' element={<Result/>}/>
       <Route path='/creategame' element={<CreateGame/>}/>
+      <Route path="/*" element={<div>Error</div>}/>
     </Routes>
   );
 }
