@@ -11,9 +11,11 @@ export default function Login() {
 
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-indigo-50">
-      <h1 className="my-16 py-2 text-center font-extrabold text-transparent bg-gradient-to-r bg-clip-text from-green-400 to-indigo-400 text-3xl md:text-6xl">
-        Högskoleprovet
-      </h1>
+      <NavLink to="/" className="md:mt-8 mt-16 mb-16">
+        <h1 className="py-2 text-center font-extrabold text-transparent bg-gradient-to-r bg-clip-text from-green-400 to-indigo-400 text-4xl md:text-6xl">
+          Högskoleprovet
+        </h1>
+      </NavLink>
       <form className="flex flex-col gap-2 mx-2 w-40 md:w-60 my-10 md:my-4">
         <input
           name="username"
