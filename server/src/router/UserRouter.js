@@ -12,6 +12,16 @@ const userService = makeUserService();
 userRouter.post("/create", async (req, res) => {
     try {
         const {username, email, password} = req.body;
+        if (typeof(username) !== "string") {
+            res.status(400).send(`Bad POST request -- username ${username} wrong type, should be string`);
+            return;
+        }
+        if (typeof(email) !== "string") {
+            res.status(400).send(`Bad POST request -- email ${email} wrong type, should be string`);
+        }
+        if (typeof(password) !== "string") {
+            res.status(400).send(`Bad POST request -- password ${password} wrong type, should be string`);
+        }
         const new_user = await userService.createUser(username, email, password);
         res.status(201).send(new_user);
     } catch (err) {
