@@ -7,29 +7,35 @@ import User from "../model/User.js";
 class UserService {
 
   constructor() {
-    this.users = [];
+    this.users = new Array();
   }
 
   /**
   * createUser, takes the parameters username, email and password
-  * adds the user to the database and returns it once its made
-  * @param {string} username 
+  * creates the user and stores it
   * @param {string} email
   * @param {string} password
-  * @returns The new user that was created | undefined if the user with the same email or username already exists 
-  */
-  async createUser(email, username, password) {
-    if (this.users.includes(user => user.email === email || user.username === username)) return undefined;
-    this.users.push(new User(email, username, password));
-  }
-  /**
-  * getUser takes a username and finds the corresponding user, undefined if there is no user with matching username
   * @param {string} username
-  * @returns stored user with given username | undefined if there is no user with matching username
+  * @returns true if new user was created | false if the user with the same email or username already exists 
   */
-  async getUser(username) {
-    return this.users.find(user => user.username === username);
+  async createUser(email, password, username) {
+    if (this.users.some(user => user.email === email || user.username === username)) return false;
+    const id = uuidv4();
+    this.users.push(new User(id, email, password, username));
+    return true;
   }
+
+  /**
+   * findUser, takes the parameters email and password
+   * finds the user matching parameters | undefined if a matching user does not exist
+   * @param {string} email 
+   * @param {string} password 
+   * @returns 
+   */
+  async findUser(email, password) {
+    return this.users.find(user => user.email === email && user.password === password);
+  }
+
   /**
    * getUsers takes to parameters and returns all users
    * @returns all stored users
@@ -37,12 +43,14 @@ class UserService {
   async getUsers() {
     return this.users;
   }
+
   async getFriends(ID) {
     // validate ID
     // Get all friends with user
 
     return `Here is all the friends of user with ID: ${ID}`
   }
+
   /**
   * 
   * @param {number} ID 
