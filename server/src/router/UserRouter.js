@@ -29,7 +29,7 @@ userRouter.post("/", async (req, res) => {
             return;
         }
 
-        // TODO: Validate email, password and password
+        // TODO: Validate email, password and username (length, characters, etc)
         
         const new_user = await userService.createUser(email, password, username);
         if (!new_user) {
@@ -52,7 +52,8 @@ userRouter.post("/login", async (req, res) => {
             res.status(400).send(`Bad POST call to ${req.originalUrl} | password has type ${typeof(password)}`);
             return;
         }
-        // TODO: Validate email and password | Maybe here?
+
+        // TODO: Validate email and password | Maybe here also?
 
         const existing_user = await userService.findUser(email, password);
         if (existing_user == null) {

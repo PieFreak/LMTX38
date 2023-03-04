@@ -3,6 +3,7 @@ import express from "express";
 import session from "express-session";
 
 import { userRouter } from "./router/UserRouter.js";
+import { gameRouter } from "./router/GameRouter.js";
 import { questionRouter } from "./router/QuestionRouter.js";
 
 export const app = express();
@@ -18,4 +19,5 @@ app.use(cors({
 }));
 app.use(express.json());
 app.use("/user", userRouter);
+app.use("/game", gameRouter);
 //app.use("/question", questionRouter);
