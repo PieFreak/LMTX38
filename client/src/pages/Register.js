@@ -1,13 +1,53 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import axios from 'axios';
+import validator from 'validator'
 import Footer from "../components/Footer";
 
 export default function Register() {
   const navigate = useNavigate();
-  const [mailAddress, setMailAddress] = useState("");
+  const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [emailError, setEmailError] = useState("");
+  const [usernameError, setUsernameError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [passConfirmError, setPassConfirmError] = useState("");
+
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    let hasError = false;
+
+    if(!validator.isEmail(email)){
+      setEmailError("Felaktig e-post");
+      hasError = true;
+    }
+    if (!validator.matches(username, "^[a-zA-Z0-9_.-]*$") || username.length < 8) {
+      setUsernameError("Användarnamnet måste innehålla 8 tecken och får endast bestå av små- & stora bokstäver och siffror");
+      hasError = true;
+    }
+    //TODO password validator--
+    if (password !== confirmPassword) {
+      setPassConfirmError("'Lösenord' stämmer ej överens med 'Bekräfta Lösenord'");
+      hasError = true;
+    }
+
+    if(hasError){
+      return;
+    }
+
+    try {
+      const response = await axios.post('http://localhost:5000/user/', { email, password, username });
+      console.log(response.data);
+      //navigate('/profile');
+    } catch (error) {
+      console.error(error);
+    }
+
+  };
 
 
   return (
@@ -17,32 +57,37 @@ export default function Register() {
           Högskoleprovet
         </h1>
       </NavLink>
-      <form className="flex flex-col gap-2 mx-2 w-40 md:w-60 my-10 md:my-4">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-2 mx-2 w-40 md:w-60 my-10 md:my-4">
         <input
           name="epost"
           className="p-1" 
           type="text"
           autoFocus
+          required
           placeholder="E-post"
           onChange={e => {
             e.preventDefault();
-            setMailAddress(e.target.value);
+            setEmail(e.target.value);
           }}
         />
+        {emailError && <span className="text-xs text-red-700"> {emailError} </span>}
         <input
           name="username"
           className="p-1" 
           type="text"
+          required
           placeholder="Användarnamn"
           onChange={e => {
             e.preventDefault();
             setUsername(e.target.value);
           }}
         />
+        {usernameError && <span className="text-xs text-red-700"> {usernameError} </span>}
         <input 
           name="password"
           className="p-1" 
           type={showPassword ? "text":"password"} 
+          required
           placeholder="Lösenord" 
           onChange={e => {
             e.preventDefault();
@@ -52,13 +97,15 @@ export default function Register() {
         <input 
           name="password"
           className="p-1" 
-          type={showPassword ? "text":"password"} 
+          type={showPassword ? "text":"password"}
+          required
           placeholder="Bekräfta Lösenord" 
           onChange={e => {
             e.preventDefault();
-            setPassword(e.target.value);
+            setConfirmPassword(e.target.value);
           }}
         />
+        {passConfirmError && <span className="text-xs text-red-700"> {passConfirmError} </span>}
         <div className="flex px-2 gap-2">
           <input
           id="show-password"
@@ -69,10 +116,7 @@ export default function Register() {
           />
           <label className="text-xs" htmlFor="show-password">Visa Lösenord</label>
         </div>
-        <button className="shadow-xl p-1 bg-indigo-100 hover:bg-indigo-200 border-2 border-indigo-200 text-indigo-800" onClick={e => {
-          e.preventDefault();
-          navigate("/register")
-        }}>
+        <button type="submit" className="shadow-xl p-1 bg-indigo-100 hover:bg-indigo-200 border-2 border-indigo-200 text-indigo-800">
           Skapa Konto
         </button>
       </form>

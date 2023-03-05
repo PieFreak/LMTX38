@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 
 import User from "../model/User.js";
+import { dbInit } from '../database/database.js';
 
 
 
@@ -20,10 +21,29 @@ class UserService {
   */
   async createUser(email, password, username) {
     if (this.users.some(user => user.email === email || user.username === username)) return false;
+    
     const id = uuidv4();
-    this.users.push(new User(id, email, password, username));
-    return true;
+    const user = new User(id, email, password, username);
+
+    //In a separate file?---
+    const connection = await dbInit();
+    try {
+      await connection.execute(
+        'INSERT INTO user (id, email, password, username) VALUES (?, ?, ?, ?)',
+        [id, email, password, username]
+      );
+      this.users.push(user);
+      return true;
+    } catch (error) {
+      console.error(error);
+      return false;
+    } finally {
+      connection.end();
+    }
+    //----
+
   }
+
 
   /**
    * findUser, takes the parameters email and password
