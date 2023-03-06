@@ -15,8 +15,9 @@ export default function Register() {
   const [usernameError, setUsernameError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [passConfirmError, setPassConfirmError] = useState("");
-
-
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  
+  
   const handleSubmit = async (event) => {
     event.preventDefault();
     let hasError = false;
@@ -41,8 +42,8 @@ export default function Register() {
 
     try {
       const response = await axios.post('http://localhost:5000/user/', { email, password, username });
+      setIsSubmitted(true);
       console.log(response.data);
-      //navigate('/profile');
     } catch (error) {
       console.error(error);
     }
@@ -51,6 +52,19 @@ export default function Register() {
 
 
   return (
+    <>
+    {isSubmitted ? (
+      <div className="min-h-screen flex flex-col justify-center items-center bg-indigo-50">
+        <div>
+          <p className="py-2 text-center  text-base md:text-2xl">Registrering lyckades!</p>
+          <NavLink to="/login">
+            <h3 className="text-center mx-auto mt-20 px-6 py-4 md:px-9 md:py-6 rounded-xl hover:bg-indigo-200 border-2 border-indigo-200 text-transparent bg-gradient-to-r bg-clip-text from-green-400 to-indigo-400 text-base md:text-2xl transition-all duration-300 shadow-2xl hover:shadow-lg">
+              Logga in
+            </h3>
+          </NavLink>
+        </div>
+      </div>
+      ) : (
     <div className="min-h-screen flex flex-col justify-center items-center bg-indigo-50">
       <NavLink to="/" className="md:mt-8 mt-16 mb-16">
         <h1 className="py-2 text-center font-extrabold text-transparent bg-gradient-to-r bg-clip-text from-green-400 to-indigo-400 text-4xl md:text-6xl">
@@ -122,6 +136,8 @@ export default function Register() {
       </form>
       <Footer/>
     </div>
+    )}
+</>
     )
   }
 

@@ -28,7 +28,7 @@ userRouter.post("/", async (req, res) => {
             res.status(406).send(`Bad POST call to ${req.originalUrl} | can't create account while logged in, try loggging out`);
             return;
         }
-
+        
         // TODO: Validate email, password and username (length, characters, etc)
         
         const new_user = await userService.createUser(email, password, username);
@@ -82,14 +82,14 @@ userRouter.post("/logout", async (req, res) => {
 /**
  * Get call for all users in the database
  */
-// userRouter.get("/all", async (req, res) => {
-//     try {
-//         const users = await userService.getUsers();
-//         res.status(200).send(users);
-//     } catch (err) {
-//         res.status(500).send(err.message);
-//     }
-// })
+ userRouter.get("/all", async (req, res) => {
+     try {
+         const users = await userService.getUsers();
+         res.status(200).send(users);
+     } catch (err) {
+         res.status(500).send(err.message);
+     }
+ })
 /**
  * Get call for user with given ID in the database
  */

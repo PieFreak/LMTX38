@@ -1,22 +1,47 @@
 import { NavLink, useNavigate} from "react-router-dom";
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import Footer from "../components/Footer";
+import axios from "axios";
 
 export default function Login() {
   const navigate = useNavigate();
-  const [username, setUsername] = useState("");
+  const [user, setUser] = useState(undefined);
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const response = await axios.post('http://localhost:5000/user/login/', { email, password });
+      localStorage.setItem("user", JSON.stringify(response.data));
+      navigate('/profile')
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  useEffect(() => {
+    const loggedInUser = localStorage.getItem("user");
+    if (loggedInUser) {
+      setUser(JSON.parse(loggedInUser));
+    }
+  }, [])
 
   return (
+    user ?
+      <div>
+        <div>You are already logged in!</div>
+        <a href="/">Go back</a>
+      </div>
+    :
     <div className="min-h-screen flex flex-col justify-center items-center bg-indigo-50">
       <NavLink to="/" className="md:mt-8 mt-16 mb-16">
         <h1 className="py-2 text-center font-extrabold text-transparent bg-gradient-to-r bg-clip-text from-green-400 to-indigo-400 text-4xl md:text-6xl">
           Högskoleprovet
         </h1>
       </NavLink>
-      <form className="flex flex-col gap-2 mx-2 w-40 md:w-60 my-10 md:my-4">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-2 mx-2 w-40 md:w-60 my-10 md:my-4">
         <input
           name="username"
           className="p-1" 
@@ -25,7 +50,7 @@ export default function Login() {
           placeholder="Användarnamn"
           onChange={e => {
             e.preventDefault();
-            setUsername(e.target.value);
+            setEmail(e.target.value);
           }}
         />
         <input 
@@ -48,10 +73,7 @@ export default function Login() {
           />
           <label className="text-xs" htmlFor="show-password">Visa Lösenord</label>
         </div>
-        <button className="shadow-xl p-1 bg-indigo-100 hover:bg-indigo-200 border-2 border-indigo-200 text-indigo-800" onClick={e => {
-          e.preventDefault();
-          console.log(`Username: ${username}\nPassword: ${password}`);
-        }}>
+        <button type="submit" className="shadow-xl p-1 bg-indigo-100 hover:bg-indigo-200 border-2 border-indigo-200 text-indigo-800">
           Logga in
         </button>
         <button className="shadow-xl p-1 bg-indigo-100 hover:bg-indigo-200 border-2 border-indigo-200 text-indigo-800" onClick={e => {

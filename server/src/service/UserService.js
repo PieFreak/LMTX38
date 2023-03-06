@@ -8,7 +8,6 @@ import { dbInit } from '../database/database.js';
 class UserService {
 
   constructor() {
-    this.users = new Array();
   }
 
   /**
@@ -20,19 +19,14 @@ class UserService {
   * @returns true if new user was created | false if the user with the same email or username already exists 
   */
   async createUser(email, password, username) {
-    if (this.users.some(user => user.email === email || user.username === username)) return false;
-    
     const id = uuidv4();
-    const user = new User(id, email, password, username);
-
-    //In a separate file?---
     const connection = await dbInit();
+
     try {
       await connection.execute(
         'INSERT INTO user (id, email, password, username) VALUES (?, ?, ?, ?)',
         [id, email, password, username]
       );
-      this.users.push(user);
       return true;
     } catch (error) {
       console.error(error);
@@ -40,8 +34,6 @@ class UserService {
     } finally {
       connection.end();
     }
-    //----
-
   }
 
 
@@ -50,10 +42,25 @@ class UserService {
    * finds the user matching parameters | undefined if a matching user does not exist
    * @param {string} email 
    * @param {string} password 
-   * @returns 
+   * @returns user if the user exist, undefined if it does not
    */
   async findUser(email, password) {
-    return this.users.find(user => user.email === email && user.password === password);
+    const connection = await dbInit();
+    try {
+      const user = await connection.execute(
+        "SELECT id, email, password, username FROM user WHERE email = (?) AND password = (?) LIMIT 1;",
+        [email, password],
+      );
+          
+      if (!user) {return undefined;}
+      return user[0][0];
+
+    } catch (error) {
+      console.error(error);
+      return undefined;
+    } finally {
+      connection.end()
+    }
   }
 
   /**
