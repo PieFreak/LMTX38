@@ -5,6 +5,8 @@ import axios from "axios";
 
 export default function Login() {
   const navigate = useNavigate();
+  const delay = ms => new Promise(res => setTimeout(res, ms))
+  const [showPreload, setShowPreload] = useState(false);
   const [user, setUser] = useState(undefined);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -15,6 +17,8 @@ export default function Login() {
     try {
       const response = await axios.post('http://localhost:5000/user/login/', { email, password });
       localStorage.setItem("user", JSON.stringify(response.data));
+      setShowPreload(true);
+      await delay(2000);
       navigate('/profile')
       console.log(response.data);
     } catch (error) {
@@ -41,48 +45,52 @@ export default function Login() {
           Högskoleprovet
         </h1>
       </NavLink>
-      <form onSubmit={handleSubmit} className="flex flex-col gap-2 mx-2 w-40 md:w-60 my-10 md:my-4">
-        <input
-          name="username"
-          className="p-1" 
-          type="text"
-          autoFocus
-          placeholder="Användarnamn"
-          onChange={e => {
-            e.preventDefault();
-            setEmail(e.target.value);
-          }}
-        />
-        <input 
-          name="password"
-          className="p-1" 
-          type={showPassword ? "text":"password"} 
-          placeholder="Lösenord" 
-          onChange={e => {
-            e.preventDefault();
-            setPassword(e.target.value);
-          }}
-        />
-        <div className="flex px-2 gap-2">
+      { !showPreload ? 
+        <form onSubmit={handleSubmit} className="flex flex-col gap-2 mx-2 w-40 md:w-60 my-10 md:my-4">
           <input
-          name="show-password"
-          type="checkbox"
-          onChange={e => {
-            setShowPassword(!showPassword);
-          }}
+            name="username"
+            className="p-1" 
+            type="text"
+            autoFocus
+            placeholder="Användarnamn"
+            onChange={e => {
+              e.preventDefault();
+              setEmail(e.target.value);
+            }}
           />
-          <label className="text-xs" htmlFor="show-password">Visa Lösenord</label>
-        </div>
-        <button type="submit" className="shadow-xl p-1 bg-indigo-100 hover:bg-indigo-200 border-2 border-indigo-200 text-indigo-800">
-          Logga in
-        </button>
-        <button className="shadow-xl p-1 bg-indigo-100 hover:bg-indigo-200 border-2 border-indigo-200 text-indigo-800" onClick={e => {
-          e.preventDefault();
-          navigate("/register")
-        }}>
-          Skapa Konto
-        </button>
-      </form>
+          <input 
+            name="password"
+            className="p-1" 
+            type={showPassword ? "text":"password"} 
+            placeholder="Lösenord" 
+            onChange={e => {
+              e.preventDefault();
+              setPassword(e.target.value);
+            }}
+          />
+          <div className="flex px-2 gap-2">
+            <input
+            name="show-password"
+            type="checkbox"
+            onChange={e => {
+              setShowPassword(!showPassword);
+            }}
+            />
+            <label className="text-xs" htmlFor="show-password">Visa Lösenord</label>
+          </div>
+          <button type="submit" className="shadow-xl p-1 bg-indigo-100 hover:bg-indigo-200 border-2 border-indigo-200 text-indigo-800">
+            Logga in
+          </button>
+          <button className="shadow-xl p-1 bg-indigo-100 hover:bg-indigo-200 border-2 border-indigo-200 text-indigo-800" onClick={e => {
+            e.preventDefault();
+            navigate("/register")
+          }}>
+            Skapa Konto
+          </button>
+        </form>
+        :
+        <div className=" absolute  gg-spinner bg-inherit flex flex-col justify-center items-center"/>
+        }
       <Footer/>
     </div>
     )
