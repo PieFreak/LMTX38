@@ -1,24 +1,29 @@
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import SettingPopup from '../components/SettingPopup'
+import Optioncircle from "../components/Optioncircle";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/free-mode";
+import "swiper/css/pagination";
+import { Pagination } from "swiper";
 
 
 export default function GameOverview() {
-
 
   const [showPopup, setShowPopup] = useState(false);
   const [selectedTitle, setSelectedTitle] = useState("");
   const [selectedText, setSelectedText] = useState("");
 
-  let cat = [{title: "ORD", text:"Prövar din förmåga att förstå ord och begrepp"},
-    {title: "LÄS", text:"Prövar din förmåga att förstå innehållet i svenska texter"},
-    {title: "MEK", text:"Prövar din förmåga att förstå ord och begrepp i sitt sammanhang"},
-    {title: "XYZ", text:"Prövar din förmåga att lösa matematiska problem inom aritmetik, algebra, geometri, funktionslära och statistik"},
-    {title: "KVA", text:"Prövar din förmåga att göra kvantitativa jämförelser inom aritmetik, algebra, geometri, funktionslära och statistik"},
-    {title: "NOG", text:"Prövar din förmåga att hantera matematiska och logiska problem inom aritmetik, algebra, geometri, funktionslära och statistik"},
-    {title: "DTK", text:"Prövar din förmåga att hämta och tolka information ur diagram, tabeller och kartor"}
+  let cat = [{title: "ORD", text:"Ordförståelse som testar din förmåga att förstå ord och begrepp"},
+    {title: "LÄS", text:"Läsförståelse som testar din förmåga att förstå innehållet i svenska texter"},
+    {title: "MEK", text:"Meningskomplettering som testar din förmåga att förstå ord och begrepp i sitt sammanhang"},
+    {title: "XYZ", text:"Testar din förmåga att lösa matematiska problem inom aritmetik, algebra, geometri, funktionslära och statistik"},
+    {title: "KVA", text:"Testar din förmåga att göra kvantitativa jämförelser inom aritmetik, algebra, geometri, funktionslära och statistik"},
+    {title: "NOG", text:"Testar din förmåga att hantera matematiska och logiska problem inom aritmetik, algebra, geometri, funktionslära och statistik"},
+    {title: "DTK", text:"Testar din förmåga att hämta och tolka information ur diagram, tabeller och kartor"}
   ];
 
   const handleButtonClick = (title, text) => {
@@ -34,95 +39,53 @@ export default function GameOverview() {
 
         <div className="w-full bg-white mb-2 flex justify-center items-center flex-col">
           
-          <p className="font-semibold text-base md:text-lg mt-16 w-auto text-center" >VÄLJ VILKEN TYP AV UPPGIFT DU VILL ÖVA PÅ</p>
-          <p className="font-semibold text-base md:text-lg mb-12 w-auto text-center" >ELLER SCROLLA NED FÖR KOMPLETTA DELPROV</p>
+          <p className="font-medium md:font-lightbold text-base md:text-lg w-[18rem] md:w-[36rem] px-2 mt-8 md:mt-16 text-center mb-8">
+            VÄLJ VILKEN TYP AV UPPGIFT DU VILL ÖVA PÅ ELLER SCROLLA NED FÖR KOMPLETTA DELPROV
+          </p>
 
           
-          <p className="anim-textAppear font-extrabold text-xl md:text-3xl m-10 mb-12 text-center" >VERBALA UPPGIFTER</p>
+          <p className="font-extrabold text-2xl md:text-3xl md:m-8 mb-6 text-center" >VERBAL</p>
           
-          <div className="grid grid-cols-3 grid-rows-1">
 
-              <div className="mx-4 justify-self-center bg-indigo-50 w-60 h-60 rounded-full
-                                  space-y-6 flex flex-col justify-center items-center">
-                <p className="text-sm md:text-xl font-extrabold text-center" >{cat[0].title}</p>
-                <p className="text-xs md:text-sm text-center mx-2" >{cat[0].text}</p>
-                <button to="/creategame" className="border-2 border-b-4 border-r-slate-500 border-b-slate-400 bg-[#ffffff] px-4 hover:bg-[#abe9f03a] border-indigo-200 hover:shadow-xl shadow-2xl transition-all duration-500"
-                                                       onClick={()=> handleButtonClick(cat[0].title, cat[0].text)}>
-                  <h2 className="font-extrabold text-center text-small md:text-base mx-2 my-1">Välj</h2>
-                </button>
-              </div>
+          <div className="hidden lg:grid lg:grid-cols-3 lg:grid-rows-1 lg:gap-6 lg:mb-12">
 
-              <div className="mx-4 justify-self-center bg-indigo-50 w-60 h-60 rounded-full 
-                                  space-y-6 flex flex-col justify-center items-center">
-                <p className="text-sm md:text-xl font-extrabold text-center" >{cat[1].title}</p>
-                <p className="text-xs md:text-sm text-center mx-2" >{cat[1].text}</p>
-                <button to="/creategame" className="border-2 border-b-4 border-r-slate-500 border-b-slate-400 bg-[#ffffff] px-4 hover:bg-[#abe9f03a] border-indigo-200 hover:shadow-xl shadow-2xl transition-all duration-500"
-                                                       onClick={()=> handleButtonClick(cat[1].title, cat[1].text)}>
-                  <h2 className="font-extrabold text-center text-small md:text-base mx-2 my-1">Välj</h2>
-                </button>
-              </div>
+            <Optioncircle category={cat[0]} buttonActivate={()=> handleButtonClick(cat[0].title, cat[0].text)}/>
+            <Optioncircle category={cat[1]} buttonActivate={()=> handleButtonClick(cat[1].title, cat[1].text)}/>
+            <Optioncircle category={cat[2]} buttonActivate={()=> handleButtonClick(cat[2].title, cat[2].text)}/>
+          
+          </div>
+          
+          <div className={`lg:hidden w-full ${showPopup ? '-z-10':'z-0'}`}>
+            <Swiper slidesPerView={"auto"} centeredSlides={true} freeMode={true} pagination={{ clickable: true,}} modules={[Pagination]} className="mySwiper w-full h-72">
+            <SwiperSlide><Optioncircle className=""category={cat[0]} buttonActivate={()=> handleButtonClick(cat[0].title, cat[0].text)}/></SwiperSlide>
+            <SwiperSlide><Optioncircle className=""category={cat[1]} buttonActivate={()=> handleButtonClick(cat[1].title, cat[1].text)}/></SwiperSlide>
+            <SwiperSlide><Optioncircle className=""category={cat[2]} buttonActivate={()=> handleButtonClick(cat[2].title, cat[2].text)}/></SwiperSlide>
 
-              <div className="mx-4 justify-self-center bg-indigo-50 w-60 h-60 rounded-full 
-                                  space-y-6 flex flex-col justify-center items-center mb-16">
-                <p className="text-sm md:text-xl font-extrabold text-center" >{cat[2].title}</p>
-                <p className="text-xs md:text-sm text-center mx-2" >{cat[2].text}</p>
-                <button to="/creategame" className="border-2 border-b-4 border-r-slate-500 border-b-slate-400 bg-[#ffffff] px-4 hover:bg-[#abe9f03a] border-indigo-200 hover:shadow-xl shadow-2xl transition-all duration-500"
-                                                       onClick={()=> handleButtonClick(cat[2].title, cat[2].text)}>
-                  <h2 className="font-extrabold text-center text-small md:text-base mx-2 my-1">Välj</h2>
-                </button>
-              </div>
-
+          </Swiper>
           </div>
 
-          <p className="anim-textAppear font-extrabold text-xl md:text-3xl m-10 mb-12 w-82 text-center" >KVANTITATIVA UPPGIFTER</p>
+          <p className=" w-auto font-extrabold text-2xl md:text-3xl m-8 mb-6 text-center" >KVANTITATIV</p>
           
-          <div className="grid grid-cols-2 grid-rows-2">
+          <div className="hidden lg:grid lg:grid-cols-2 lg:grid-rows-2 lg:gap-x-24 lg:gap-y-12 lg:mb-16">
 
-              <div className="mx-12 mb-8 justify-self-center bg-indigo-50 w-60 h-60 rounded-full 
-                                  space-y-6 flex flex-col justify-center items-center">
-                <p className="text-sm md:text-xl font-extrabold text-center" >{cat[3].title}</p>
-                <p className="text-xs md:text-sm text-center mx-2" >{cat[3].text}</p>
-                <button to="/creategame" className="border-2 border-b-4 border-r-slate-500 border-b-slate-400 bg-[#ffffff] px-4 hover:bg-[#abe9f03a] border-indigo-200 hover:shadow-xl shadow-2xl transition-all duration-500"
-                                                       onClick={()=> handleButtonClick(cat[3].title, cat[3].text)}>
-                  <h2 className="font-extrabold text-center text-small md:text-base mx-2 my-1">Välj</h2>
-                </button>
-              </div>
-
-              <div className="mx-12 mb-8 justify-self-center bg-indigo-50 w-60 h-60 rounded-full 
-                                  space-y-6 flex flex-col justify-center items-center">
-                <p className="text-sm md:text-xl font-extrabold text-center" >{cat[4].title}</p>
-                <p className="text-xs md:text-sm text-center mx-2" >{cat[4].text}</p>
-                <button to="/creategame" className="border-2 border-b-4 border-r-slate-500 border-b-slate-400 bg-[#ffffff] px-4 hover:bg-[#abe9f03a] border-indigo-200 hover:shadow-xl shadow-2xl transition-all duration-500"
-                                                       onClick={()=> handleButtonClick(cat[4].title, cat[4].text)}>
-                  <h2 className="font-extrabold text-center text-small md:text-base mx-2 my-1">Välj</h2>
-                </button>
-              </div>
-
-              <div className="mx-12 mb-8 justify-self-center bg-indigo-50 w-60 h-60 rounded-full 
-                                  space-y-6 flex flex-col justify-center items-center">
-                <p className="text-sm md:text-xl font-extrabold text-center" >{cat[5].title}</p>
-                <p className="text-xs md:text-sm text-center mx-2" >{cat[5].text}</p>
-                <button to="/creategame" className="border-2 border-b-4 border-r-slate-500 border-b-slate-400 bg-[#ffffff] px-4 hover:bg-[#abe9f03a] border-indigo-200 hover:shadow-xl shadow-2xl transition-all duration-500"
-                                                       onClick={()=> handleButtonClick(cat[5].title, cat[5].text)}>
-                  <h2 className="font-extrabold text-center text-small md:text-base mx-2 my-1">Välj</h2>
-                </button>
-              </div>
-
-              <div className="mx-12 mb-8 justify-self-center bg-indigo-50 w-60 h-60 rounded-full 
-                                  space-y-6 flex flex-col justify-center items-center">
-                <p className="text-sm md:text-xl font-extrabold text-center" >{cat[6].title}</p>
-                <p className="text-xs md:text-sm text-center mx-2" >{cat[6].text}</p>
-                <button to="/creategame" className="border-2 border-b-4 border-r-slate-500 border-b-slate-400 bg-[#ffffff] px-4 hover:bg-[#abe9f03a] border-indigo-200 hover:shadow-xl shadow-2xl transition-all duration-500"
-                                                       onClick={()=> handleButtonClick(cat[6].title, cat[6].text)}>
-                  <h2 className="font-extrabold text-center text-small md:text-base mx-2 my-1">Välj</h2>
-                </button>
-              </div>
-
+            <Optioncircle className="mx-4 my-6"category={cat[3]} buttonActivate={()=> handleButtonClick(cat[3].title, cat[3].text)}/>
+            <Optioncircle className="mx-4 my-6"category={cat[4]} buttonActivate={()=> handleButtonClick(cat[4].title, cat[4].text)}/>
+            <Optioncircle className="mx-4 my-6"category={cat[5]} buttonActivate={()=> handleButtonClick(cat[5].title, cat[5].text)}/>
+            <Optioncircle className="mx-4 my-6"category={cat[6]} buttonActivate={()=> handleButtonClick(cat[6].title, cat[6].text)}/>
           </div>
+          <div className={`md:hidden w-full ${showPopup ? '-z-10':'z-0'}`}>
+            <Swiper slidesPerView={"auto"} centeredSlides={true} freeMode={true} pagination={{ clickable: true,}} modules={[Pagination]} className="mySwiper w-full h-72">
+            <SwiperSlide><Optioncircle className=""category={cat[3]} buttonActivate={()=> handleButtonClick(cat[3].title, cat[3].text)}/></SwiperSlide>
+            <SwiperSlide><Optioncircle className=""category={cat[4]} buttonActivate={()=> handleButtonClick(cat[4].title, cat[4].text)}/></SwiperSlide>
+            <SwiperSlide><Optioncircle className=""category={cat[5]} buttonActivate={()=> handleButtonClick(cat[5].title, cat[5].text)}/></SwiperSlide>
+            <SwiperSlide><Optioncircle className=""category={cat[6]} buttonActivate={()=> handleButtonClick(cat[6].title, cat[6].text)}/></SwiperSlide>
+          </Swiper>
+          </div>
+          
       </div>
 
       <div className="w-full h-96 mx-auto bg-[#1d807975] mb-2">
-          <h1 className="mt-2 pt-8 mb-16 flex justify-center items-center w-full 
+          <h1 className="mt-2 pt-8 mb-4 flex justify-center items-center w-full 
                         text-white text-xl md:text-3xl p-2">FÖRFRÅGNINGAR</h1>
       </div>
 
