@@ -18,7 +18,7 @@ export default function Login() {
       navigate('/profile')
       console.log(response.data);
     } catch (error) {
-      console.error(error);
+      console.error(error.message);
     }
   };
   useEffect(() => {

@@ -1,9 +1,8 @@
-import { NavLink, useLocation, useNavigate } from "react-router-dom"
+import { NavLink, } from "react-router-dom"
 import { useState, useEffect } from "react";
 import axios from "axios";
 
 export default function Navbar() {
-  const navigate = useNavigate();
   const [user, setUser] = useState(undefined);
   let links = [
     {title:"Hem", link:"/"},
@@ -45,21 +44,22 @@ export default function Navbar() {
           {
             links.map(({title, link}) => (
             <li key={title} className={`md:ml-8 md:my-0 my-7`}>
-              <NavLink to={link} className="md:text-sm items-center hover:text-blue-500">
+              <NavLink to={link} className="md:text-sm items-center hover:text-blue-500 hover:underline">
                 {title}
               </NavLink>
             </li>
           ))}
         </ul>
         {user ?
-          <NavLink to="/" className="flex px-2 py-1 text-sm" onClick={async (e) => {
+          <NavLink to="/" className="flex px-2 py-1 text-sm hover:underline" onClick={async (e) => {
             e.preventDefault();
             try {
               const response = await axios.post('http://localhost:5000/user/logout');
+              console.log(response);
               localStorage.clear();
               setUser(undefined);
             } catch (err) {
-              console.log(err);
+              console.log(err.message);
             }
             setUser(undefined)
           }}>
@@ -67,7 +67,7 @@ export default function Navbar() {
             Logga ut
           </NavLink>
           :
-          <NavLink to="/login" className="flex px-2 py-1 text-sm">
+          <NavLink to="/login" className="flex px-2 py-1 text-sm hover:underline">
             <div className="gg-log-in mr-3 self-center"/> 
             Logga in 
           </NavLink>
