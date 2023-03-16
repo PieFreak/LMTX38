@@ -6,6 +6,7 @@
 @import url('https://unpkg.com/css.gg@2.0.0/icons/css/menu.css');
 @import url('https://unpkg.com/css.gg@2.0.0/icons/css/log-in.css');
 @import url('https://unpkg.com/css.gg@2.0.0/icons/css/log-out.css');
+@import url('https://unpkg.com/css.gg@2.0.0/icons/css/spinner.css');
 
 * {
   margin: 0;
@@ -27,3 +28,14 @@ h1,h2,h3,h4,h5  {
 .active {
   font-weight: 600;
 }
+
+.anim-textAppear{
+  white-space: nowrap;
+  overflow: hidden;
+  width: 30em;
+  animation: type 2s steps(120, end); 
+}
+
+@keyframes type{ 
+  from { width: 0; } 
+} 

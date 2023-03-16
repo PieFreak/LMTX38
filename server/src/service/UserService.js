@@ -1,6 +1,5 @@
-import { v4 as uuidv4 } from 'uuid';
 
-import User from "../model/User.js";
+import { v4 as uuidv4 } from 'uuid';
 import { dbInit } from '../database/database.js';
 
 
@@ -20,9 +19,9 @@ class UserService {
     const id = uuidv4();
     try {
       await connection.query(`
-        INSERT INTO user (id, email, password, username) 
-        VALUES (?, ?, ?, ?)`,
-        [id, email, password, username]
+      INSERT INTO user (id, email, password, username) 
+      VALUES (?, ?, ?, ?)`,
+      [id, email, password, username]
       );
       return true;
     } catch (error) {
@@ -45,13 +44,12 @@ class UserService {
     const connection = await dbInit();
     try {
       const [user] = await connection.query(`
-        SELECT * 
-        FROM user 
-        WHERE email = (?) AND password = (?) LIMIT 1;`,
-        [email, password]
+      SELECT * 
+      FROM user 
+      WHERE email = (?) AND password = (?) LIMIT 1;`,
+      [email, password]
       );
       return user[0];
-
     } catch (error) {
       console.error(error);
       return undefined;
@@ -68,22 +66,21 @@ class UserService {
     const connection = await dbInit();
     try {
       const [users] = await connection.query(`
-      SELECT *
+      SELECT id, username
       FROM user`
       );
+      return users;
     } catch (error) {
       console.error(error);
       return undefined;
     } finally {
-      connection.end()
+      connection.end();
     }
-    return users;
+    
   }
 
   async getFriends(ID) {
     const connection = await dbInit();
-    // validate ID
-    // Get all friends with user
     try {
       const [friends] = await connection.query(`
       SELECT friend
@@ -91,24 +88,37 @@ class UserService {
       WHERE user = (?)`,
       [ID]
       );
+      return friends;
     } catch (error) {
-
+      console.error(error);
+      return undefined;
+    } finally {
+      connection.end();
     }
-
-    return `Here is all the friends of user with ID: ${ID}`
+    
   }
 
   /**
-  * 
-  * @param {number} ID 
-  * @param {string} new_username 
-  * @returns 
+  * Updates a user with a new username
+  * @param {number} ID the ID of the user to update
+  * @param {string} new_username the new username
+  * @returns ???
   */
-  async changeUsername(ID, new_username) {
+  async updateUsername(ID, new_username) {
     const connection = await dbInit();
-    // Change username in MySQL
-    // Get user
-    return `Username for ${ID} changed to ${new_username}`;
+    try {
+      const [response] = await connection.query(`
+      UPDATE user SET username = (?)
+      WHERE id = (?)`,
+      [new_username, ID]
+      );
+      return response;
+    } catch (error) {
+      console.error(error);
+      return undefined;
+    } finally {
+      connection.end();
+    }
   }
 }
 
