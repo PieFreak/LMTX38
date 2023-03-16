@@ -78,7 +78,11 @@ class UserService {
     }
     
   }
-
+  /**
+   * Gets all friends of user with given ID
+   * @param {string} ID 
+   * @returns all friends 
+   */
   async getFriends(ID) {
     const connection = await dbInit();
     try {
@@ -100,9 +104,9 @@ class UserService {
 
   /**
   * Updates a user with a new username
-  * @param {number} ID the ID of the user to update
+  * @param {string} ID the ID of the user to update
   * @param {string} new_username the new username
-  * @returns ???
+  * @returns true if the user username was updated, false if it was not
   */
   async updateUsername(ID, new_username) {
     const connection = await dbInit();
@@ -112,10 +116,10 @@ class UserService {
       WHERE id = (?)`,
       [new_username, ID]
       );
-      return response;
+      return true;
     } catch (error) {
       console.error(error);
-      return undefined;
+      return false;
     } finally {
       connection.end();
     }
