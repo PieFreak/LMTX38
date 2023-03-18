@@ -46,7 +46,7 @@ class UserService {
       const [user] = await connection.query(`
       SELECT * 
       FROM user 
-      WHERE email = (?) AND password = (?) LIMIT 1;`,
+      WHERE email = (?) AND password = (?) LIMIT 1`,
       [email, password]
       );
       return user[0];
@@ -77,6 +77,29 @@ class UserService {
       connection.end();
     }
     
+  }
+    
+  /**
+   * Adds a new friendship with user and friend
+   * @param {string} userID 
+   * @param {string} friendID 
+   * @returns 
+   */
+  async addFriend(userID, friendID) {
+    const connection = await dbInit();
+    try {
+      await connection.query(`
+      INSERT INTO friendship (user, friend)
+      VALUES (?, ?)`,
+      [userID, friendID]
+      );
+      return true;
+    } catch (error) {
+      console.error(error);
+      return false;
+    } finally {
+      connection.end();
+    }
   }
   /**
    * Gets all friends of user with given ID

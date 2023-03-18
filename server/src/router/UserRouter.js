@@ -90,6 +90,8 @@ userRouter.post("/logout", async (req, res) => {
          res.status(500).send(err.message);
      }
  })
+
+
 /**
  * Get call for user with given ID in the database
  */
