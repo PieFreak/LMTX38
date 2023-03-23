@@ -1,4 +1,4 @@
-import express from "express";
+
 import { app } from "./start.js";
 
 // for enviromental variables

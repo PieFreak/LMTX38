@@ -7,21 +7,21 @@ const userService = makeUserService();
 
 
 /**
- * Post call for creating a user
+ * POST call for creating a user
  */
 userRouter.post("/", async (req, res) => {
     try {
         const {email, password, username} = req.body;
-        if (typeof(email) !== "string") {
-            res.status(400).send(`Bad POST call to ${req.originalUrl} | email has type ${typeof(email)}`);
+        if (typeof email !== "string") {
+            res.status(400).send(`Bad POST call to ${req.originalUrl} | email has type ${typeof email}`);
             return;
         }
-        if (typeof(password) !== "string") {
-            res.status(400).send(`Bad POST call to ${req.originalUrl} | password has type ${typeof(password)}`);
+        if (typeof password !== "string") {
+            res.status(400).send(`Bad POST call to ${req.originalUrl} | password has type ${typeof password}`);
             return;
         }
-        if (typeof(username) !== "string") {
-            res.status(400).send(`Bad POST call to ${req.originalUrl} | username has type ${typeof(username)}`);
+        if (typeof username !== "string") {
+            res.status(400).send(`Bad POST call to ${req.originalUrl} | username has type ${typeof username}`);
             return;
         }
         if (req.session.user != null) {
@@ -41,20 +41,22 @@ userRouter.post("/", async (req, res) => {
         res.status(500).send(err.message);
     }
 })
+
+
+/**
+ * POST call for logging in with email and password
+ */
 userRouter.post("/login", async (req, res) => {
     try {
         const {email, password} = req.body;
-        if (typeof(email) !== "string") {
-            res.status(400).send(`Bad POST call to ${req.originalUrl} | email has type ${typeof(email)}`);
+        if (typeof email !== "string") {
+            res.status(400).send(`Bad POST call to ${req.originalUrl} | email has type ${typeof email}`);
             return;
         }
-        if (typeof(password) !== "string") {
-            res.status(400).send(`Bad POST call to ${req.originalUrl} | password has type ${typeof(password)}`);
+        if (typeof password !== "string") {
+            res.status(400).send(`Bad POST call to ${req.originalUrl} | password has type ${typeof password}`);
             return;
         }
-
-        // TODO: Validate email and password | Maybe here also?
-
         const existing_user = await userService.findUser(email, password);
         if (existing_user == null) {
             res.status(401).send(`Bad POST call to ${req.originalUrl} | bad email or password`);
@@ -66,6 +68,11 @@ userRouter.post("/login", async (req, res) => {
         res.status(500).send(err.message);
     }
 })
+
+
+/**
+ * POST call for logging out
+ */
 userRouter.post("/logout", async (req, res) => {
     try {
         if (req.session.user == null) {
@@ -79,8 +86,9 @@ userRouter.post("/logout", async (req, res) => {
     }
 })
 
+
 /**
- * Get call for all users in the database
+ * GET call for getting all the users (id, username) only
  */
  userRouter.get("/all", async (req, res) => {
      try {
@@ -92,37 +100,127 @@ userRouter.post("/logout", async (req, res) => {
  })
 
 
-/**
- * Get call for user with given ID in the database
- */
-// userRouter.get("/:ID", async (req, res) => {
-//     try {
-//         const valid_ID = parseInt(req.params.ID);
-//         if (!Number.isInteger(valid_ID)) {
-//             res.status(400).send(`Bad GET request to ${req.originalUrl} --- not a valid number`);
-//             return;
-//         }
-//         const user = await userService.getUser(valid_ID);
-//         res.status(200).send(user);
-//     } catch (err) {
-//         res.status(500).send(err.message);
-//     }
-// })
-/**
- * Put call for new username for a user given ID in the database
- */
-// userRouter.put("/:ID", async (req, res) => {
-//     try {
-//         const valid_ID = parseInt(req.params.ID);
-//         if (!Number.isInteger(valid_ID)) {
-//             res.status(400).send(`Bad GET request to ${req.originalUrl} --- not a valid number`);
-//             return;
-//         }
-//         const {new_username} = req.body;
-//         await userService.changeUsername(valid_ID, new_username);
-//         res.status(200).send(`Username was changed to ${new_username}`);
+ /**
+  * PUT call for changing the username of a user
+  */
+ userRouter.put("/username/change", async (req, res) => {
+    try {
+        const user = req.sesson.user;
+        const {newUsername} = req.body;
+        if (user == null) {
+            res.status(403).send(`Bad POST call to ${req.originalUrl} | access denied`);
+            return;
+        }
+        if (typeof newUsername !== "string") {
+            res.status(400).send(`Bad POST call to ${req.originalUrl} | newUsername should be a string, has type ${typeof newUsername}`);
+            return;
+        }
+        // TODO: Validate username?
 
-//     } catch (err) {
-//         res.status(500).send(err.message)
-//     }
-// })
+        const response = await userService.updateUsername(user.id, newUsername);
+        if (!response) {
+            res.status(400).send(`Couldn't update the username, something went wrong!`);
+            return;
+        }
+        const updated_user = await userService.findUser(user.email, user.password);
+        req.session.user = updated_user;
+        res.status(200).send(`User with ID ${updated_user.id} has updated their username to ${updated_user.username}`);
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+})
+
+
+/**
+ * POST call for adding a friend to a user
+ */
+userRouter.post("/friend", async (req, res) => {
+    try {
+        const user = req.session.user;
+        const {friend} = req.body;
+        if (user == null) {
+            res.status(403).send(`Bad POST call to ${req.originalUrl} | access denied`);
+            return;
+        }
+        if (typeof friend !== "string") {
+            res.status(400).send(`Bad POST call to ${req.originalUrl} | friend should be a string, has type ${typeof friend}`);
+            return;
+        }
+        const new_friend = await userService.addFriend(user.id, friend);
+        if (!new_friend) {
+            res.status(400).send(`Couldn't save the friend, something went wrong!`);
+            return;
+        }
+        res.status(201).send(`User with ID ${friend} was added to ${user.id}'s friends`);
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+})
+
+
+/**
+ * GET call for getting all friends of a user
+ */
+userRouter.get("/friend", async (req, res) => {
+    try {
+        const user = req.session.user;
+        if (user == null) {
+            res.status(403).send(`Bad POST call to ${req.originalUrl} | access denied`);
+            return;
+        }
+        const friends = await userService.getFriends(user.id);
+        if (friends == null) {
+            res.status(400).send(`Couldn't get the friends of user with ID ${user.id}!`);
+            return;
+        }
+        res.status(200).send(friends);
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+})
+
+// TODO: remove friend?
+
+
+/**
+ * GET call for getting all the rounds created by the user
+ */
+userRouter.get("/round", async (req, res) => {
+    try {
+        const user = req.session.user;
+        if (user == null) {
+            res.status(403).send(`Bad POST call to ${req.originalUrl} | access denied`);
+            return;
+        }
+        const rounds = await userService.getRounds(user.id);
+        if (rounds == null) {
+            res.status(400).send(`Couldn't get the rounds of user with ID ${user.id}!`);
+            return;
+        }
+        res.status(200).send(rounds);
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+})
+
+
+/**
+ * GET call for getting all the completed rounds created by the user
+ */
+userRouter.get("/round/complete", async (req, res) => {
+    try {
+        const user = req.session.user;
+        if (user == null) {
+            res.status(403).send(`Bad POST call to ${req.originalUrl} | access denied`);
+            return;
+        }
+        const complete_rounds = await userService.getCompleteRounds(user.id);
+        if (complete_rounds == null) {
+            res.status(400).send(`Couldn't get the complete rounds of user with ID ${user.id}!`);
+            return;
+        }
+        res.status(200).send(complete_rounds);
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+})

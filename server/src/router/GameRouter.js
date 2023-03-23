@@ -7,7 +7,10 @@ export const gameRouter = express.Router();
 
 const gameService = makeGameService();
 
-gameRouter.get("/initial", async (req, res) => {
+/**
+ * GET call for a new game with a list of questions
+ */
+gameRouter.get("/", async (req, res) => {
     try {
         const {questionType, questionAmount} = req.body;
         if (req.session.user == null) {
@@ -15,15 +18,15 @@ gameRouter.get("/initial", async (req, res) => {
             return;
         }
         if (typeof(questionType) !== "string") {
-            res.status(400).send(`Bad POST call to ${req.originalUrl} | questionType has type ${typeof(questionType)}`);
-            return;
-        }
-        if (typeof(questionAmount) !== "number") {
-            res.status(400).send(`Bad POST call to ${req.originalUrl} | questionAmount has type ${typeof(questionAmount)}`);
+            res.status(400).send(`Bad POST call to ${req.originalUrl} | questionType should be a string, has type ${typeof questionType}`);
             return;
         }
         if (!["XYZ, KVA, NOG, ORD, LÄS, MEK"].includes(questionType)) {
             res.status(400).send(`Bad POST call to ${req.originalUrl} | questionType has to be one of ["XYZ, KVA, NOG, ORD, LÄS, MEK"]`);
+            return;
+        }
+        if (typeof(questionAmount) !== "number") {
+            res.status(400).send(`Bad POST call to ${req.originalUrl} | questionAmount has type ${typeof(questionAmount)}`);
             return;
         }
         if (![5,10,20,30,40].includes(questionAmount)) {
@@ -40,36 +43,81 @@ gameRouter.get("/initial", async (req, res) => {
         res.status(500).send(err.message);
     }
 })
-gameRouter.post("/", async (req, res) => {
+/**
+ * POST call for creating a new round after it has been played
+ */
+gameRouter.post("/round", async (req, res) => {
     try {
-        if (req.session.user == null) {
+        const {questions, score} = req.body;
+        const user = req.session.user;
+        if (user == null) {
             res.status(403).send(`Bad POST call to ${req.originalUrl} | access denied`);
             return;
         }
-        // create first "complete" run
+        if (!Array.isArray(questions) || !questions.every(q => typeof q === "string")) {
+            res.status(400).send(`Bad POST call to ${req.originalUrl} | questions should be a list of strings`);
+            return;
+        }
+        if (typeof score !== "number") {
+            res.status(400).send(`Bad POST call to ${req.originalUrl} | score should be a number, has type ${typeof score}`);
+            return;
+        }
+        const round = await gameService.saveRound(user.id, questions, score);
+        if (!round) {
+            res.status(400).send(`Couldn't save the round, something went wrong!`);
+            return;
+        }
+        res.status(201).send(`New round was created`);
     } catch (err) {
         res.status(500).send(err.message);
     }
 })
-gameRouter.post("/finish", async (req, res) => {
+/**
+ * GET call for getting a round by its ID
+ */
+gameRouter.get("/round", async (req, res) => {
     try {
-        if (req.session.user == null) {
+        const {id} = req.body;
+        const user = req.session.user;
+        if (user == null) {
             res.status(403).send(`Bad POST call to ${req.originalUrl} | access denied`);
             return;
         }
-        // create create complete run
-    } catch (err) {
+        if (typeof id !== "string") {
+            res.status(400).send(`Bad POST call to ${req.originalUrl} | id should be a string, has type ${typeof id}`);
+            return;
+        }
+        const round = await gameService.getRound(id);
+        if (round == null) {
+            res.status(400).send(`Could not find a round with id ${id}!`);
+            return;
+        }
+        res.status(200).send(round);
+    } catch (error) {
         res.status(500).send(err.message);
     }
 })
-gameRouter.get("/", async (req, res) => {
+/**
+ * POST call for creating a complete round, when a user has played played an existing round
+ */
+gameRouter.post("/round/complete", async (req, res) => {
     try {
-        if (req.session.user == null) {
+        const {round, score} = req.body;
+        const user = req.session.user;
+        if (user == null) {
             res.status(403).send(`Bad POST call to ${req.originalUrl} | access denied`);
             return;
         }
-
-        // return game
+        if (typeof round !== "string") {
+            res.status(400).send(`Bad POST call to ${req.originalUrl} | round should be a string, has type ${typeof round}`);
+            return;
+        }
+        const completeRound = await gameService.saveCompleteRound(user.id, round, score);
+        if (!completeRound) {
+            res.status(400).send(`Couldn't save the complete round, something went wrong!`);
+            return;
+        }
+        res.status(201).send(`New completed round was created`);
     } catch (err) {
         res.status(500).send(err.message);
     }
