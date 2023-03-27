@@ -7,6 +7,9 @@
 @import url('https://unpkg.com/css.gg@2.0.0/icons/css/log-in.css');
 @import url('https://unpkg.com/css.gg@2.0.0/icons/css/log-out.css');
 @import url('https://unpkg.com/css.gg@2.0.0/icons/css/spinner.css');
+@import url('https://unpkg.com/css.gg@2.0.0/icons/css/arrow-right.css');
+@import url('https://unpkg.com/css.gg@2.0.0/icons/css/arrow-left.css');
+@import url('https://unpkg.com/css.gg@2.0.0/icons/css/check.css');
 
 * {
   margin: 0;

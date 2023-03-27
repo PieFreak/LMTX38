@@ -8,20 +8,20 @@ export const gameRouter = express.Router();
 const gameService = makeGameService();
 
 /**
- * GET call for a new game with a list of questions
+ * POST call for a new game with a list of questions
  */
-gameRouter.get("/", async (req, res) => {
+gameRouter.post("/", async (req, res) => {
     try {
         const {questionType, questionAmount} = req.body;
-        if (req.session.user == null) {
+/*         if (req.session.user == null) {
             res.status(403).send(`Bad POST call to ${req.originalUrl} | access denied`);
             return;
-        }
+        } */
         if (typeof(questionType) !== "string") {
             res.status(400).send(`Bad POST call to ${req.originalUrl} | questionType should be a string, has type ${typeof questionType}`);
             return;
         }
-        if (!["XYZ, KVA, NOG, ORD, LÄS, MEK"].includes(questionType)) {
+        if (!["XYZ", "KVA", "NOG", "ORD", "LÄS", "MEK"].includes(questionType)) {
             res.status(400).send(`Bad POST call to ${req.originalUrl} | questionType has to be one of ["XYZ, KVA, NOG, ORD, LÄS, MEK"]`);
             return;
         }
