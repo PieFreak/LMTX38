@@ -5,7 +5,7 @@ import axios from "axios";
 export default function Navbar() {
   const [user, setUser] = useState(undefined);
   let links = [
-    {title:"Hem", link:"/"},
+    {title:"Start", link:"/gameoverview"},
     {title:"Om 'namn'", link:"/about"},
     {title:"Profil", link:"/profile"},
   ]
