@@ -9,23 +9,22 @@ export default function GamePlay() {
 	const navigate = useNavigate();
 	const location = useLocation();
 	const game = location.state.game;
-	console.log(game.length)
 	const [currentQuestion, setCurrentQuestion] = useState(0);
-	const [selectedAnswers, setSelectedAnswers] = useState(Array(game.length).fill(-1));
+	const [selectedAnswers, setSelectedAnswers] = useState(Array(game.length).fill(undefined));
 
 	const [showResultButton, setShowResultButton] = useState(false);
 	const [clickableResultButton, setClickableResultButton] = useState(false);
 
-	const handleAnswerClick = (index) => {
+	const handleAnswerClick = (answer) => {
 		setSelectedAnswers(prevSelectedAnswers => {
 			const newSelectedAnswers = [...prevSelectedAnswers];
-			newSelectedAnswers[currentQuestion] = index;
+			newSelectedAnswers[currentQuestion] = answer;
 			return newSelectedAnswers;
 		});
 	};
 
 	const checkIfAllQuestionsAnswered = (answers) => {
-		return answers.every(answer => answer !== -1);
+		return answers.every(answer => answer != null);
 	};
 
 	useEffect(() => {
@@ -53,7 +52,17 @@ export default function GamePlay() {
 	};
 
 	const handleResultClick = async () => {
-		//TODO
+		try {
+			const score = selectedAnswers.filter(answer => answer.correct).length;
+			const questionIDs = game.map(question => question.id);
+			const response = await axios.post('http://localhost:5000/game/round/', {
+				questions:questionIDs, score:score
+			});
+			console.log(response.data);
+			navigate('/result', { state: { roundID: response.data, answered: selectedAnswers, game: game}});
+		} catch (error) {
+			console.error(error.message);
+		}
 	};
 
 	return (
@@ -69,11 +78,11 @@ export default function GamePlay() {
 						return (
 							<button
 								key={index}
-								className={`grid grid-cols-8 w-full mx-auto hover:shadow-sm hover:border-x-2 py-1 my-4 hover:border-x-cyan-800 ${selectedAnswers[currentQuestion] === index
+								className={`grid grid-cols-8 w-full mx-auto hover:shadow-sm hover:border-x-2 py-1 my-4 hover:border-x-cyan-800 ${selectedAnswers[currentQuestion] === answer
 									? "hover:shadow-sm hover:shadow-cyan-400 shadow-sm shadow-cyan-600 border-x-2 border-x-cyan-900"
 									: "shadow-inner shadow-indigo-100"
 									}`}
-								onClick={() => handleAnswerClick(index)}
+								onClick={() => handleAnswerClick(answer)}
 							>
 								<p className="col-start-1 col-end-2 self-center text-[0.57rem] md:text-[0.6rem]">{String.fromCharCode(65 + index)}. </p>
 								<p className={`col-start-2 col-end-8 text-center text-[0.57rem] md:text-[0.6rem]`}>{answer.answer}</p>
@@ -103,7 +112,7 @@ export default function GamePlay() {
 				</div>
 
 			</div >
-{/* 			<Footer />
+			{/* 			<Footer />
  */}		</div>
 	)
 
