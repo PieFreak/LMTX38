@@ -74,7 +74,7 @@ class GameService {
      * @param {string} user the ID of the user 
      * @param {Array<string>} questions array of question IDs
      * @param {number} score the score the user got when answering the questions
-     * @returns {Promise<boolean>} if the new round was created
+     * @returns {Promise<string>} id of the new round, undefined if an error occurs
      * @description saves a round in the database
      */
     async saveRound(user, questions, score) {
@@ -86,17 +86,17 @@ class GameService {
             VALUES (?, ?, ?, NOW())`,
             [id, user, score]
             );
-            questions.forEach(async (question) => {
+            for (const question of questions) {
                 await connection.query(`
                 INSERT INTO roundquestion (roundid, questionid)
                 VALUES (?, ?)`,
                 [id, question]
                 );
-            })
-            return true;
+            }
+            return id;
         } catch (error) {
             console.error(error)
-            return false
+            return undefined;
         } finally {
             connection.end();
         }
@@ -113,7 +113,7 @@ class GameService {
         const connection = await dbInit();
         try {
             const [round] = await connection.query(`
-            SELECT r.id, r.owner, r.ownerscore, r.date, JSON_ARRAYAGG(rq.roundquestion) AS questions
+            SELECT r.id, r.owner, r.ownerscore, r.date, JSON_ARRAYAGG(rq.questionid) AS questions
             FROM (
                 SELECT *
                 FROM round

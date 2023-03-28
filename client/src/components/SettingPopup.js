@@ -19,7 +19,7 @@ const SettingPopup = ({ title, text, show, onClose }) => {
             const response = await axios.post('http://localhost:5000/game/', {
                 questionType: title,
                 questionAmount: amount
-            }, { withCredentials: true });
+            });
             navigate('/gameplay', { state: { game: response.data } });
         } catch (error) {
             console.error(error.response.data);
