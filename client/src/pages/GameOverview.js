@@ -73,7 +73,7 @@ export default function GameOverview() {
             <Optioncircle className="mx-4 my-6"category={cat[5]} buttonActivate={()=> handleButtonClick(cat[5].title, cat[5].text)}/>
             <Optioncircle className="mx-4 my-6"category={cat[6]} buttonActivate={()=> handleButtonClick(cat[6].title, cat[6].text)}/>
           </div>
-          <div className={`md:hidden w-full ${showPopup ? '-z-10':'z-0'}`}>
+          <div className={`lg:hidden w-full ${showPopup ? '-z-10':'z-0'}`}>
             <Swiper slidesPerView={"auto"} centeredSlides={true} freeMode={true} pagination={{ clickable: true,}} modules={[Pagination]} className="mySwiper w-full h-72">
             <SwiperSlide><Optioncircle className=""category={cat[3]} buttonActivate={()=> handleButtonClick(cat[3].title, cat[3].text)}/></SwiperSlide>
             <SwiperSlide><Optioncircle className=""category={cat[4]} buttonActivate={()=> handleButtonClick(cat[4].title, cat[4].text)}/></SwiperSlide>
