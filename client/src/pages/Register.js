@@ -3,6 +3,7 @@ import { useState } from "react";
 import axios from 'axios';
 import validator from 'validator'
 import Footer from "../components/Footer";
+import {Form, Button} from "react-bootstrap"
 
 export default function Register() {
   const navigate = useNavigate();
@@ -52,93 +53,82 @@ export default function Register() {
 
 
   return (
-    <>
-    {isSubmitted ? (
-      <div className="min-h-screen flex flex-col justify-center items-center bg-indigo-50">
-        <div>
-          <p className="py-2 text-center  text-base md:text-2xl">Registrering lyckades!</p>
-          <NavLink to="/login">
-            <h3 className="text-center mx-auto mt-20 px-6 py-4 md:px-9 md:py-6 rounded-xl hover:bg-indigo-200 border-2 border-indigo-200 text-transparent bg-gradient-to-r bg-clip-text from-green-400 to-indigo-400 text-base md:text-2xl transition-all duration-300 shadow-2xl hover:shadow-lg">
-              Logga in
-            </h3>
-          </NavLink>
+    <div className="min-vh-100 d-flex flex-column">
+        <NavLink to="/" className="text-decoration-none my-5">
+          <h1 className="text-center">
+            Högskoleprovet
+          </h1>
+        </NavLink>
+      {isSubmitted ?
+        <div className="d-flex flex-column align-items-center">
+          <p>Registrering lyckades!</p>
+          <NavLink to="/login">Logga in</NavLink>
         </div>
-      </div>
-      ) : (
-    <div className="min-h-screen flex flex-col justify-center items-center bg-indigo-50">
-      <NavLink to="/" className="md:mt-8 mt-16 mb-16">
-        <h1 className="py-2 text-center font-extrabold text-transparent bg-gradient-to-r bg-clip-text from-green-400 to-indigo-400 text-4xl md:text-6xl">
-          Högskoleprovet
-        </h1>
-      </NavLink>
-      <form onSubmit={handleSubmit} className="flex flex-col gap-2 mx-2 w-40 md:w-60 my-10 md:my-4">
-        <input
-          name="epost"
-          className="p-1" 
-          type="text"
-          autoFocus
-          required
-          placeholder="E-post"
-          onChange={e => {
-            e.preventDefault();
-            setEmail(e.target.value);
-          }}
-        />
-        {emailError && <span className="text-xs text-red-700"> {emailError} </span>}
-        <input
-          name="username"
-          className="p-1" 
-          type="text"
-          required
-          placeholder="Användarnamn"
-          onChange={e => {
-            e.preventDefault();
-            setUsername(e.target.value);
-          }}
-        />
-        {usernameError && <span className="text-xs text-red-700"> {usernameError} </span>}
-        <input 
-          name="password"
-          className="p-1" 
-          type={showPassword ? "text":"password"} 
-          required
-          placeholder="Lösenord" 
-          onChange={e => {
-            e.preventDefault();
-            setPassword(e.target.value);
-          }}
-        />
-        <input 
-          name="password"
-          className="p-1" 
-          type={showPassword ? "text":"password"}
-          required
-          placeholder="Bekräfta Lösenord" 
-          onChange={e => {
-            e.preventDefault();
-            setConfirmPassword(e.target.value);
-          }}
-        />
-        {passConfirmError && <span className="text-xs text-red-700"> {passConfirmError} </span>}
-        <div className="flex px-2 gap-2">
-          <input
-          id="show-password"
-          type="checkbox"
-          onChange={e => {
-            setShowPassword(!showPassword);
-          }}
+      :
+        <Form 
+          onSubmit={handleSubmit}
+          className="d-flex flex-column mt-3 mx-auto px-5 gap-1"
+        >
+          <Form.Control
+            name="epost"
+            required
+            type="text"
+            placeholder="E-post"
+            onChange={e => {
+              e.preventDefault();
+              setEmail(e.target.value);
+            }}
           />
-          <label className="text-xs" htmlFor="show-password">Visa Lösenord</label>
-        </div>
-        <button type="submit" className="shadow-xl p-1 bg-indigo-100 hover:bg-indigo-200 border-2 border-indigo-200 text-indigo-800">
-          Skapa Konto
-        </button>
-      </form>
+          {emailError && <Form.Label className="fs-6 text-danger text-wrap">{emailError}</Form.Label>}
+          <Form.Control
+            name="username"
+            required
+            type="text"
+            placeholder="Användarnamn"
+            onChange={e => {
+              e.preventDefault();
+              setUsername(e.target.value);
+            }}
+          />
+          {usernameError && <Form.Label className="fs-6 text-danger">{usernameError}</Form.Label>}
+          <Form.Control
+            name="password"
+            required
+            type={showPassword ? "text":"password"} 
+            placeholder="Lösenord"
+            onChange={e => {
+              e.preventDefault();
+              setPassword(e.target.value);
+            }}
+          />
+          {passwordError && <Form.Label className="fs-6 text-danger">{passwordError}</Form.Label>}
+          <Form.Control
+            name="confirmpassword"
+            required
+            type={showPassword ? "text":"password"}
+            placeholder="Bekräfta Lösenord"
+            onChange={e => {
+              e.preventDefault();
+              setConfirmPassword(e.target.value);
+            }}
+          />
+          {passConfirmError && <Form.Label className="fs-6 text-danger text-wrap">{passConfirmError}</Form.Label>}
+          <Form.Group className="d-flex gap-1">
+            <Form.Check
+              name="show-password"
+              type="checkbox"
+              onChange={() =>{
+                setShowPassword(oldShowPassword => !oldShowPassword);
+              }}
+            />
+            <Form.Label>Visa Lösenord</Form.Label>
+          </Form.Group>
+          <Button type="submit">Skapa Konto</Button>
+        </Form>
+      }
       <Footer/>
     </div>
-    )}
-</>
-    )
-  }
+  )
+}
 
   

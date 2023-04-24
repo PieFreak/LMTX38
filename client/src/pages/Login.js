@@ -1,6 +1,7 @@
 import { NavLink, useNavigate} from "react-router-dom";
 import {useState, useEffect} from "react";
 import Footer from "../components/Footer";
+import {Form, Button, Row, Col} from "react-bootstrap";
 import axios from "axios";
 
 export default function Login() {
@@ -22,7 +23,11 @@ export default function Login() {
       navigate('/profile')
       console.log(response.data);
     } catch (error) {
-      console.error(error.message);
+      if (error.response.status === 401) {
+        console.log("INVALID")
+      } else {
+        console.error(error.message);
+      }
     }
   };
   useEffect(() => {
@@ -31,65 +36,106 @@ export default function Login() {
       setUser(JSON.parse(loggedInUser));
     }
   }, [])
-
+  if (user) {
+    <div>
+      <div>You are already logged in!</div>
+      <a href="/">Go back</a>
+    </div>
+  }
   return (
-    user ?
-      <div>
-        <div>You are already logged in!</div>
-        <a href="/">Go back</a>
-      </div>
-    :
-    <div className="min-h-screen flex flex-col justify-center items-center bg-indigo-50">
-      <NavLink to="/" className="md:mt-8 mt-16 mb-16">
-        <h1 className="py-2 text-center font-extrabold text-transparent bg-gradient-to-r bg-clip-text from-green-400 to-indigo-400 text-4xl md:text-6xl">
+    <div className="min-vh-100 d-flex flex-column">
+      <NavLink to="/" className="text-decoration-none my-5">
+        <h1 className="text-center">
           Högskoleprovet
         </h1>
       </NavLink>
-      { !showPreload ? 
-        <form onSubmit={handleSubmit} className="flex flex-col gap-2 mx-2 w-40 md:w-60 my-10 md:my-4">
-          <input
+      {showPreload ? 
+        <div className="gg-spinner d-flex"/>
+        :
+        <Form 
+          onSubmit={handleSubmit}
+          className="d-flex flex-column mt-3 mx-auto gap-1"
+        >
+          <Form.Control
             name="username"
-            className="p-1" 
+            required
             type="text"
-            autoFocus
             placeholder="Användarnamn"
             onChange={e => {
               e.preventDefault();
               setEmail(e.target.value);
             }}
           />
-          <input 
+          <Form.Control
             name="password"
-            className="p-1" 
+            required
             type={showPassword ? "text":"password"} 
-            placeholder="Lösenord" 
+            placeholder="Lösenord"
             onChange={e => {
               e.preventDefault();
               setPassword(e.target.value);
             }}
           />
-          <div className="flex px-2 gap-2">
-            <input
-            name="show-password"
-            type="checkbox"
-            onChange={e => {
-              setShowPassword(!showPassword);
-            }}
+          <Form.Group className="d-flex gap-1">
+            <Form.Check
+              name="show-password"
+              type="checkbox"
+              onChange={() =>{
+                setShowPassword(oldShowPassword => !oldShowPassword);
+              }}
             />
-            <label className="text-xs" htmlFor="show-password">Visa Lösenord</label>
-          </div>
-          <button type="submit" className="shadow-xl p-1 bg-indigo-100 hover:bg-indigo-200 border-2 border-indigo-200 text-indigo-800">
-            Logga in
-          </button>
-          <button className="shadow-xl p-1 bg-indigo-100 hover:bg-indigo-200 border-2 border-indigo-200 text-indigo-800" onClick={e => {
-            e.preventDefault();
-            navigate("/register")
-          }}>
-            Skapa Konto
-          </button>
-        </form>
-        :
-        <div className=" absolute  gg-spinner bg-inherit flex flex-col justify-center items-center"/>
+            <Form.Label>Visa Lösenord</Form.Label>
+          </Form.Group>
+            <Button type="submit">Logga in</Button>
+            <Button onClick={e => {
+              e.preventDefault();
+              navigate("/register");
+            }}>
+              Skapa Konto
+            </Button>
+        </Form>
+        // <form onSubmit={handleSubmit} className="flex flex-col gap-2 mx-2 w-40 md:w-60 my-10 md:my-4">
+        //   <input
+        //     name="username"
+        //     className="p-1" 
+        //     type="text"
+        //     autoFocus
+        //     placeholder="Användarnamn"
+        //     onChange={e => {
+        //       e.preventDefault();
+        //       setEmail(e.target.value);
+        //     }}
+        //   />
+        //   <input 
+        //     name="password"
+        //     className="p-1" 
+        //     type={showPassword ? "text":"password"} 
+        //     placeholder="Lösenord" 
+        //     onChange={e => {
+        //       e.preventDefault();
+        //       setPassword(e.target.value);
+        //     }}
+        //   />
+        //   <div className="flex px-2 gap-2">
+        //     <input
+        //     name="show-password"
+        //     type="checkbox"
+        //     onChange={e => {
+        //       setShowPassword(!showPassword);
+        //     }}
+        //     />
+        //     <label className="text-xs" htmlFor="show-password">Visa Lösenord</label>
+        //   </div>
+        //   <button type="submit" className="shadow-xl p-1 bg-indigo-100 hover:bg-indigo-200 border-2 border-indigo-200 text-indigo-800">
+        //     Logga in
+        //   </button>
+        //   <button className="shadow-xl p-1 bg-indigo-100 hover:bg-indigo-200 border-2 border-indigo-200 text-indigo-800" onClick={e => {
+        //     e.preventDefault();
+        //     navigate("/register")
+        //   }}>
+        //     Skapa Konto
+        //   </button>
+        // </form>
         }
       <Footer/>
     </div>
