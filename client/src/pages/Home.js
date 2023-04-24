@@ -13,18 +13,22 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col justify-center item-center  bg-indigo-50">
-      <h1 className="md:mt-8 mt-16 mb-16 py-2 text-center font-extrabold text-transparent bg-gradient-to-r bg-clip-text from-green-400 to-indigo-400 text-4xl md:text-6xl">
-        Högskoleprovet
-      </h1>
-      <NavLink to={user ? "/profile" : "/login"} className="mx-auto mt-20 px-6 py-4 md:px-9 md:py-6 rounded-xl bg-indigo-100 hover:bg-indigo-200 border-2 border-indigo-200 text-indigo-800 text-2xl md:text-4xl transition-all duration-300 shadow-2xl hover:shadow-lg">
-        <h3>Kom igång</h3>
-      </NavLink>
-      <h4 className="mx-5 py-20 text-center text-indigo-900 md:text-xl text-lg">
-        Ett enklare sätt att öva inför högskoleprovet.
-      </h4>
-      <Footer/>
+    <div class="min-vh-100 d-flex flex-column justify-content-center align-items-center bg-light">
+  <h1 class="mt-md-5 mb-md-5 mt-3 mb-3 py-2 text-center font-weight-bold text-white bg-gradient bg-gradient-success text-4xl">
+    Högskoleprovet
+  </h1>
+  <a href="<?php echo $user ? '/profile' : '/login'; ?>" class="mx-auto mt-5 px-4 py-3 rounded-lg bg-lightblue hover-bg-lightblue-500 border-2 border-lightblue text-darkblue text-2xl md:text-4xl transition-shadow duration-300 shadow-lg hover-shadow-xl">
+    <h3>Kom igång</h3>
+  </a>
+  <h4 class="mx-5 my-5 text-center text-dark">
+    Ett enklare sätt att öva inför högskoleprovet.
+  </h4>
+  <footer>
+    <div class="container-fluid text-center text-dark pt-4 pb-4">
+      <small>&copy; 2023 Högskoleprovet</small>
     </div>
-    
+  </footer>
+</div>
+
     )
   }
