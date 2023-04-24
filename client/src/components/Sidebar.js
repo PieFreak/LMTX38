@@ -8,13 +8,13 @@ export default function Sidebar({sideItems}) {
 
   
 
-  return (
-    <div className="flex absolute">
-      <div className={`w-64 bg-indigo-100 h-screen ${isOpen && 'hidden'}`}>
-      <ul>
+  return (  
+    <div className="flex absolute z-0">
+      <div className={`pl-5 pt-3 w-52 bg-indigo-100 h-screen ${isOpen && 'hidden'}`}>
+      <ul className='flex flex-col gap-3 list-disc'>
         {sideItems.map((sideItem) => (
           <li key={sideItem.id}>
-            <a href={`#${sideItem.id}`}>
+            <a className=" hover:border-b-2 hover:border-b-gray-400 hover:font-extrabold transition-all duration-100" href={`#${sideItem.id}`}>
               {sideItem.title}
             </a>
           </li>

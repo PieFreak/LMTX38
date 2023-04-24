@@ -18,15 +18,9 @@ export default function Navbar() {
   }, []);
 
   return (
-    <nav className="w-screen px-2 md:px-4 py-2 bg-indigo-300 bg-opacity-10 text-indigo-500 md:flex md:items-center">
+    <nav className={`z-50 w-screen px-2 md:px-4 py-2 bg-indigo-100 text-indigo-500 md:flex md:items-center ${open && "drop-shadow-2xl md:drop-shadow-none"}`}>
       <div className="flex justify-between items-center">
         <NavLink to="/" className="md:text-xl text-transparent bg-gradient-to-r bg-clip-text from-green-600 to-indigo-400">
-          {/*
-          <img 
-            className="h-10 inline pr-2"
-            src="https://via.placeholder.com/300x150"
-            alt="icon"
-          ></img>*/ }
           Högskoleprovet
         </NavLink>
         <span className="cursor-pointer mx-2 md:hidden block">
@@ -39,11 +33,11 @@ export default function Navbar() {
           </button>
         </span>
       </div>
-      <div className={`bg-none md:flex md:items-center justify-between grow md:pb-0 absolute md:static md:z-auto left-0 w-full md:w-auto md:pl-0 pl-9 ${open ? 'top-10 bg-inherit border-b-2':'top-[-490px] bg-none'}`}>
+      <div className={`z-40 bg-inherit md:flex md:items-center justify-between grow md:pb-0 absolute md:static md:z-auto left-0 w-full md:w-auto md:pl-0 pl-9 ${open ? '':'top-[-490px]'}`}>
         <ul className="md:flex">
           {
             links.map(({title, link}) => (
-            <li key={title} className={`md:ml-8 md:my-0 my-7`}>
+            <li key={title} className={`md:ml-8 md:my-0 my-5`}>
               <NavLink to={link} className="md:text-sm items-center hover:text-blue-500 hover:underline">
                 {title}
               </NavLink>
