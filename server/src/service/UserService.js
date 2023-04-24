@@ -220,7 +220,7 @@ class UserService {
                 FROM round 
                 WHERE owner = (?)
             ) r
-            JOIN completeround cr ON r.id = cr.round
+            LEFT JOIN completeround cr ON r.id = cr.round
             GROUP BY r.id`,
             [user]
             );
@@ -246,7 +246,7 @@ class UserService {
             const [completedrounds] = await connection.query(`
             SELECT r.id, r.owner, r.ownerscore, r.date rounddate, cr.opponent, cr.opponentscore, cr.date completerounddate
             FROM round r
-            JOIN (
+            RIGHT JOIN (
                 SELECT *
                 FROM completeround
                 WHERE opponent = (?)
