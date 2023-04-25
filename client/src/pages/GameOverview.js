@@ -9,7 +9,7 @@ import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/pagination";
 import { Pagination } from "swiper";
-
+import {Row, Col} from "react-bootstrap"
 export default function GameOverview() {
   const [showPopup, setShowPopup] = useState(false);
   const [selectedTitle, setSelectedTitle] = useState("");
@@ -53,7 +53,7 @@ export default function GameOverview() {
   };
 
   return (
-    <div className="min-vh-100 w-100 bg-light">
+    <div className="z-2 min-vh-100 w-100 bg-light">
       <SettingPopup
         title={selectedTitle}
         text={selectedText}
@@ -63,12 +63,17 @@ export default function GameOverview() {
       <Navbar />
 
       <div className="w-100 bg-white mb-2 d-flex justify-content-center align-items-center flex-column">
-        <p className="fw-medium fs-6 w-auto px-2 mt-5 mb-4 text-center">
-          VÄLJ VILKEN TYP AV UPPGIFT DU VILL ÖVA PÅ ELLER SCROLLA NED FÖR
-          KOMPLETTA DELPROV
-        </p>
-
-        <p className="w-auto fw-bold text-primary fs-2 mt-5 mb-4 text-center">
+        <div className="container">
+          <Row className="justify-content-center">
+            <Col xs={12} md={10} lg={8} xl={6}>
+              <p className="fw-medium fs-6 w-auto px-2 mt-5 mb-4 text-center">
+                VÄLJ VILKEN TYP AV UPPGIFT DU VILL ÖVA PÅ ELLER SCROLLA NED FÖR
+                KOMPLETTA DELPROV
+              </p>
+            </Col>
+          </Row>
+        </div>
+        <p className="w-auto fw-bold fs-2 mt-3 mb-4 text-center">
           VERBAL
         </p>
 
@@ -90,7 +95,7 @@ export default function GameOverview() {
           />
         </div>
 
-        <div className={`d-lg-none w-100 ${showPopup ? "z-n1" : "z-0"}`}>
+        <div className={`d-lg-none w-100`}>
           <Swiper
             slidesPerView={"auto"}
             centeredSlides={true}
@@ -129,7 +134,7 @@ export default function GameOverview() {
           </Swiper>
         </div>
 
-        <p className="w-auto fw-bold text-primary fs-2 mt-5 mb-4 text-center">
+        <p className="w-auto fw-bold fs-2 mt-5 mb-4 text-center">
           KVANTITATIV
         </p>
 
@@ -168,14 +173,14 @@ export default function GameOverview() {
           </div>
         </div>
 
-        <div className={`d-lg-none w-100 mb-2 ${showPopup ? "z-n1" : "z-0"}`}>
+        <div className={`d-lg-none w-100 mb-2`}>
           <Swiper
             slidesPerView={"auto"}
             centeredSlides={true}
             freeMode={true}
             pagination={{ clickable: true }}
             modules={[Pagination]}
-            className="mySwiper w-100 h-72"
+            className="mySwiper w-100"
           >
             <SwiperSlide>
               <Optioncircle

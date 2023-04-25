@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Modal from "react-bootstrap/Modal";
+import Button from "react-bootstrap/Button";
 
 const SettingPopup = ({ title, text, show, onClose }) => {
   const navigate = useNavigate();
@@ -25,81 +27,55 @@ const SettingPopup = ({ title, text, show, onClose }) => {
     }
   };
 
-  if (!show) return null;
-
   return (
-    <div onClick={() => { onClose(); setSelectedButton(20); }} className="position-fixed d-flex justify-content-center align-items-center w-100 h-100">
-
-      <div
-        onClick={(e) => {
-          e.stopPropagation();
-        }}
-        className="bg-white z-n5 position-absolute border border-primary rounded mx-auto shadow-lg bg-light d-flex flex-column justify-content-center align-items-center col-sm-12 col-md-8 col-lg-6"
-        >
-        <button
-          onClick={() => {
-            onClose();
-            setSelectedButton("20");
-          }}
-          className="position-absolute top-0 start-0 p-2 btn btn-close"
-        ></button>
-        <div className="w-100">
-          <h1 className="text-primary fs-1 mt-4 mb-4 text-center">{title}</h1>
-          <h3 className="text-secondary mx-4 mb-4 text-center">{text}</h3>
-          <p className="my-4 text-center">
-            Välj antal frågor omgången ska innehålla
-          </p>
-          <div className="mx-auto d-flex flex-row justify-content-center align-items-center flex-wrap gap-2 my-2">
-            <button
-              className={`btn btn-outline-secondary px-4 ${
-                selectedButton === 5 ? "bg-primary text-white" : " bg-white"
+    <Modal
+      show={show}
+      onHide={onClose}
+      centered
+      backdrop="true"
+      size="lg"
+      className="setting-popup"
+    >
+      <Modal.Body className="border border-4 border-info border-opacity-75" closeButton>
+        <Modal.Title className="w-100 text-center">{title}</Modal.Title>
+        <h3 className="fs-5 mx-2 mb-4 text-center">{text}</h3>
+        <p className="my-4 text-center fs-6">
+          Välj antal frågor omgången ska innehålla
+        </p>
+        <div className="mx-auto d-flex flex-row justify-content-center align-items-center flex-wrap gap-2 my-2">
+          { /* Add buttons for selecting the amount here */}
+          <Button
+            variant={`outline-secondary px-3 btn-sm ${selectedButton === 5 ? "bg-info bg-opacity-25" : " bg-opacity-50"
               }`}
-              onClick={() => handleAmountOption(5)}
-            >
-              5
-            </button>
-            <button
-              className={`btn btn-outline-secondary px-4 ${
-                selectedButton === 10 ? "bg-primary text-white" : " bg-white"
-              }`}
-              onClick={() => handleAmountOption(10)}
-            >
-              10
-            </button>
-            <button
-              className={`btn btn-outline-secondary px-4 ${
-                selectedButton === 20 ? "bg-primary text-white" : " bg-white"
-              }`}
-              onClick={() => handleAmountOption(20)}
-            >
-              20
-            </button>
-            <button
-              className={`btn btn-outline-secondary px-4 ${
-                selectedButton === 30 ? "bg-primary text-white" : " bg-white"
-              }`}
-              onClick={() => handleAmountOption(30)}
-            >
-              30
-            </button>
-            <button
-              className={`btn btn-outline-secondary px-4 ${
-                selectedButton === 40 ? "bg-primary text-white" : " bg-white"
-              }`}
-              onClick={() => handleAmountOption(40)}
-            >
-              40
-            </button>
-          </div>
-          <button
-            onClick={startGame}
-            className="btn btn-primary mx-auto mb-4 d-flex justify-content-center"
+            onClick={() => handleAmountOption(5)}
           >
-            Start Game
-          </button>
+            5
+          </Button>
+          <Button
+            variant={`outline-secondary px-3 btn-sm ${selectedButton === 10 ? "bg-info bg-opacity-25" : " bg-white"
+              }`}
+            onClick={() => handleAmountOption(10)}
+          >
+            10
+          </Button>
+          <Button
+            variant={`outline-secondary px-3 btn-sm ${selectedButton === 20 ? "bg-info bg-opacity-25" : " bg-white"
+              }`}
+            onClick={() => handleAmountOption(20)}
+          >
+            20
+          </Button>
         </div>
-      </div>
-    </div>
+
+        <Button
+          variant="outline-dark px-4 py-3 mt-4 btn-lg text-danger border border-1 border-opacity-50 border-muted mx-auto mb-4 d-flex justify-content-center"
+          onClick={startGame}
+        >
+          Start Game
+        </Button>
+      </Modal.Body>
+    </Modal>
   );
 };
+
 export default SettingPopup;
