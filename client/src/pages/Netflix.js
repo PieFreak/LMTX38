@@ -43,41 +43,53 @@ export default function Netflix() {
       <div className="my-5 ml-10">
         <p className="text-lg text-white font-black pb-3">Drama Programmes</p>
         <div className="overflow-hidden">
-          <ul className="flex gap-1 mb-5">
-            <li>{movie}</li>
-            <li>{movie}</li>
-            <li>{movie}</li>
-            <li>{movie}</li>
-            <li>{movie}</li>
-            <li>{movie}</li>
+          <ul className="flex gap-1 mb-5 whitespace-nowrap">
+            <li className="flex-shrink-0">{movie}</li>
+            <li className="flex-shrink-0">{movie}</li>
+            <li className="flex-shrink-0">{movie}</li>
+            <li className="flex-shrink-0">{movie}</li>
+            <li className="flex-shrink-0">{movie}</li>
+            <li className="flex-shrink-0">{movie}</li>
+            <li className="flex-shrink-0">{movie}</li>
+            <li className="flex-shrink-0">{movie}</li>
+            <li className="flex-shrink-0">{movie}</li>
+
           </ul>
         </div>
       </div>
+
       <div className="my-5 ml-10">
-        <p className="text-lg text-white font-black pb-3">
-          We've picked these for you today
-        </p>
-        <ul className="flex gap-1 mb-10">
-          <li>{movie}</li>
-          <li>{movie}</li>
-          <li>{movie}</li>
-          <li>{movie}</li>
-          <li>{movie}</li>
-          <li>{movie}</li>
-        </ul>
+        <p className="text-lg text-white font-black pb-3">We've picked these for you today</p>
+        <div className="overflow-hidden">
+          <ul className="flex gap-1 mb-5 whitespace-nowrap">
+            <li className="flex-shrink-0">{movie}</li>
+            <li className="flex-shrink-0">{movie}</li>
+            <li className="flex-shrink-0">{movie}</li>
+            <li className="flex-shrink-0">{movie}</li>
+            <li className="flex-shrink-0">{movie}</li>
+            <li className="flex-shrink-0">{movie}</li>
+            <li className="flex-shrink-0">{movie}</li>
+            <li className="flex-shrink-0">{movie}</li>
+            <li className="flex-shrink-0">{movie}</li>
+          </ul>
+        </div>
       </div>
+
       <div className="my-5 ml-10">
-        <p className="text-lg text-white font-black pb-3">
-          We've picked these for you today
-        </p>
-        <ul className="flex gap-1">
-          <li>{movie2}</li>
-          <li>{movie2}</li>
-          <li>{movie2}</li>
-          <li>{movie2}</li>
-          <li>{movie2}</li>
-          <li>{movie2}</li>
-        </ul>
+        <p className="text-lg text-white font-black pb-3">Top 10 TV Programmes in Sweden Today</p>
+        <div className="overflow-hidden">
+          <ul className="flex gap-1 mb-5 whitespace-nowrap">
+            <li className="flex-shrink-0">{movie2}</li>
+            <li className="flex-shrink-0">{movie2}</li>
+            <li className="flex-shrink-0">{movie2}</li>
+            <li className="flex-shrink-0">{movie2}</li>
+            <li className="flex-shrink-0">{movie2}</li>
+            <li className="flex-shrink-0">{movie2}</li>
+            <li className="flex-shrink-0">{movie2}</li>
+            <li className="flex-shrink-0">{movie2}</li>
+            <li className="flex-shrink-0">{movie2}</li>
+          </ul>
+        </div>
       </div>
     </div>
   );
