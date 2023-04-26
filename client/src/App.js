@@ -8,6 +8,7 @@ import Profile from './pages/Profile';
 import GameOverview from './pages/GameOverview';
 import Result from './pages/Result';
 import CreateGame from './pages/CreateGame';
+import Netflix from './pages/Netflix';
 
 
 import { Route, Routes} from "react-router-dom"
@@ -25,6 +26,7 @@ function App() {
       <Route path='/gameoverview' element={<GameOverview/>}/>
       <Route path='/result' element={<Result/>}/>
       <Route path='/creategame' element={<CreateGame/>}/>
+      <Route path='/netflix' element={<Netflix/>}/>
       <Route path="/*" element={<div>Error</div>}/>
     </Routes>
   );
