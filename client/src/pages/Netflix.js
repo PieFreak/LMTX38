@@ -16,7 +16,7 @@ export default function Netflix() {
     <Col>
       <img
         alt="netflix avatar"
-        src="https://placehold.co/240x150"
+        src="https://placehold.co/240x150/000000/FFFFFF.png"
         className=""
       />
     </Col>
@@ -26,15 +26,15 @@ export default function Netflix() {
     <Col>
       <img
         alt="netflix avatar"
-        src="https://placehold.co/240x180"
+        src="https://placehold.co/240x180/000000/FFFFFF.png"
         className=""
       />
     </Col>
   );
 
   return (
-    <div className="min-vh-100 bg-secondary">
-      <Navbar bg="dark" className="py-0">
+    <div className="min-vh-100 bg-dark">
+      <Navbar bg="black" className="py-0">
         <Navbar.Brand href="#home" className="mx-3">
           <img
             alt="netflix logo"
@@ -76,7 +76,7 @@ export default function Netflix() {
           </NavDropdown>
         </Nav>
       </Navbar>
-      <div className="container-fluid pt-3 z-1 ">
+      <div className="container-fluid py-4 ps-5 pe-0 z-1">
         <h1 className="fs-6 mb-0 text-white mb-2">
           Drama Programmes
         </h1>
@@ -88,9 +88,10 @@ export default function Netflix() {
           {movies}
           {movies}
           {movies}
+          {movies}
         </Row>
       </div>
-      <div className="container-fluid pt-4 z-1 ">
+      <div className="container-fluid py-4 ps-5 pe-0 z-1 ">
         <h1 className="fs-6 mb-0 text-white mb-2">
           We've picked these for you today
         </h1>
@@ -102,13 +103,15 @@ export default function Netflix() {
           {movies}
           {movies}
           {movies}
+          {movies}
         </Row>
       </div>
-      <div className="container-fluid pt-3 z-1 ">
+      <div className="container-fluid py-4 ps-5 pe-0 z-1 ">
         <h1 className="fs-6 mb-0 text-white mb-2">
           Top 10 TV Programmes in Sweden Today
         </h1>
         <Row className="flex-nowrap overflow-hidden g-1">
+          {movies2}
           {movies2}
           {movies2}
           {movies2}
