@@ -18,27 +18,27 @@ export default function Navbar() {
   }, []);
 
   return (
-    <nav className={`z-50 w-screen px-2 md:px-4 py-2 bg-indigo-100 text-indigo-500 md:flex md:items-center ${open && "drop-shadow-2xl md:drop-shadow-none"}`}>
-      <div className="flex justify-between items-center">
-        <NavLink to="/" className="md:text-xl text-transparent bg-gradient-to-r bg-clip-text from-green-600 to-indigo-400">
+    <nav className={`z-50 w-screen lg:px-4 py-2 bg-gray-100 lg:flex lg:items-center ${open && "drop-shadow-2xl lg:drop-shadow-none"}`}>
+      <div className="ml-8 md:ml-32 flex justify-between items-center">
+        <NavLink to="/" className="lg:text-lg text-blue-500 ">
           Högskoleprovet
         </NavLink>
-        <span className="cursor-pointer mx-2 md:hidden block">
+        <span className="cursor-pointer mx-2 lg:hidden block md:block">
           <button 
             name={open ? "close" : "menu"}
             className="px-2 py-3 flex"
             onClick={()=>setOpen(!open)}
           >
-            <div className="gg-menu"/>
+            <div className="mr-2 md:mr-20 gg-menu"/>
           </button>
         </span>
       </div>
-      <div className={`z-40 bg-inherit md:flex md:items-center justify-between grow md:pb-0 absolute md:static md:z-auto left-0 w-full md:w-auto md:pl-0 pl-9 ${open ? '':'top-[-490px]'}`}>
-        <ul className="md:flex">
+      <div className={`ml-4 mr-40 z-40 bg-inherit lg:flex lg:items-center justify-between grow lg:pb-0 absolute lg:static lg:z-auto left-0 w-full lg:w-auto lg:pl-0 pl-9 ${open ? '':'top-[-490px]'}`}>
+        <ul className="lg:flex">
           {
             links.map(({title, link}) => (
-            <li key={title} className={`md:ml-8 md:my-0 my-5`}>
-              <NavLink to={link} className="md:text-sm items-center hover:text-blue-500 hover:underline">
+            <li key={title} className={`lg:ml-4 lg:my-0 my-5`}>
+              <NavLink to={link} className="lg:text-sm text-gray-600 items-center hover:text-blue-500 hover:underline">
                 {title}
               </NavLink>
             </li>
@@ -62,7 +62,7 @@ export default function Navbar() {
           </NavLink>
           :
           <NavLink to="/login" className="flex px-2 py-1 text-sm hover:underline">
-            <div className="gg-log-in mr-3 self-center"/> 
+            <div className="gg-log-in t mr-3 self-center"/> 
             Logga in 
           </NavLink>
         }

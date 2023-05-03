@@ -39,7 +39,7 @@ export default function GameOverview() {
 
         <div className="w-full bg-white mb-2 flex justify-center items-center flex-col">
           
-          <p className="font-medium md:font-lightbold text-base md:text-lg w-[18rem] md:w-[36rem] px-2 mt-8 md:mt-16 text-center mb-8">
+          <p className="font-medium md:font-lightbold text-base md:text-lg w-[17rem] md:w-[36rem] px-2 mt-12 md:mt-16 text-center mb-8">
             VÄLJ VILKEN TYP AV UPPGIFT DU VILL ÖVA PÅ ELLER SCROLLA NED FÖR KOMPLETTA DELPROV
           </p>
 

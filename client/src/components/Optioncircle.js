@@ -2,7 +2,7 @@
 const Optioncircle = ({category, buttonActivate}) => {
     
     return (
-        <div className="mx-auto justify-self-center bg-indigo-50 w-60 h-60 rounded-full
+        <div className="mx-auto justify-self-center bg-gray-100 w-60 h-60 rounded-full
         space-y-6 flex flex-col justify-center items-center">
         <p className="text-sm md:text-xl font-extrabold text-center" >{category.title}</p>
         <p className="text-xs md:text-sm text-center mx-2" >{category.text}</p>
