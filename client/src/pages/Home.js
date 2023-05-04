@@ -14,15 +14,15 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="min-vh-100 d-flex flex-column justify-content-center align-items-center bg-light">
+    <div className="vh-100 w-full d-flex flex-column justify-content-center align-items-center bg-light">
       <h1 className="text-primary my-5">
         Högskoleprovet
       </h1>
-      <NavLink to={user ? "/profile" : "/login"}>
+      <NavLink className="my-5 pt-3 pb-3" to={user ? "/profile" : "/login"}>
         <Button
           variant="light"
           size="lg"
-          className="shadow my-5 pt-3 pb-2 ps-5 pe-5"
+          className="shadow py-3 ps-5 pe-5"
         >
           <h3>Kom igång</h3>
         </Button>

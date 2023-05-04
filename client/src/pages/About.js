@@ -17,7 +17,7 @@ export default function About() {
     return (
         <div className="vh-screen bg-white">
             <Navbar />
-            <div className="container lg:px-5">
+            <div className="vh-screen container lg:px-5">
                 <h1 className="mt-5 mb-5 py-2 text-center text-dark h2">
                     Om Högskoleprovet
                 </h1>
@@ -50,7 +50,7 @@ export default function About() {
                 <h1 className="mt-5 mb-5 pt-5 h4 py-2 text-center text-dark h2">
                 
                 </h1>
-                <p className="text-center h6 mt-3 pb-5 mb-5 col-12 col-md-6 mx-auto">
+                <p className="text-center text-muted h6 mt-3 pb-5 mb-5 col-12 col-md-8 mx-auto">
                     Syftet med detta projekt är att kunna tävla mot andra användare på frågor från högskoleprovets
                     olika delar. Applikationen ska vara ett hjälpmedel för de som vill öva
                     inför högskoleprovet tillsammans med andra på ett roligt sätt!
