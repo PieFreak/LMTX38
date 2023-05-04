@@ -53,7 +53,7 @@ export default function GameOverview() {
   };
 
   return (
-    <div className="z-2 min-vh-100 w-100 bg-white">
+    <div className="z-2 vh-screen bg-white">
       <SettingPopup
         title={selectedTitle}
         text={selectedText}
@@ -62,7 +62,7 @@ export default function GameOverview() {
       />
       <Navbar />
 
-      <div className="w-100 bg-white mb-2 d-flex justify-content-center align-items-center flex-column">
+      <div className="w-100 min-vh-100 bg-white mb-2 d-flex justify-content-center align-items-center flex-column">
         <div className="container">
           <Row className="justify-content-center">
             <Col xs={12} md={10} lg={8} xl={6}>
@@ -138,7 +138,7 @@ export default function GameOverview() {
           KVANTITATIV
         </p>
 
-        <div className="w-75 d-none d-lg-flex flex-wrap justify-content-around mb-4 gap-2">
+        <div className="d-none d-lg-flex flex-wrap justify-content-around mb-4 gap-2">
           <div className="col-lg-5">
             <Optioncircle
               category={cat[3]}
@@ -222,23 +222,6 @@ export default function GameOverview() {
             </SwiperSlide>
           </Swiper>
         </div>
-      </div>
-
-      <div className="w-100 mx-auto mb-2">
-        <h1
-          className="mt-2 pt-5 mb-4 d-flex justify-content-center align-items-center w-100 
-                        h3 p-2"
-        >
-          FÖRFRÅGNINGAR
-        </h1>
-      </div>
-      <div className="w-100 mx-auto mb-2">
-        <h1
-          className="mt-2 pt-5 mb-5 d-flex justify-content-center align-items-center w-100 
-                         h3 p-2"
-        >
-          RESULTAT
-        </h1>
       </div>
       <Footer />
     </div>

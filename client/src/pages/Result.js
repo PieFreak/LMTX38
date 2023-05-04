@@ -32,9 +32,9 @@ export default function Result() {
   };
 
   return (
-    <div className="vh-screen d-flex flex-column justify-content-center align-items-center bg-light">
+    <div className="min-vh-screen w-100 bg-white">
       <Navbar />
-      <div className="w-100 mx-auto bg-opacity-50 pb-5 px-4">
+      <div className="w-100 mx-auto pb-5 px-4">
         <h1 className="pt-5 mb-5 d-flex justify-content-center align-items-center w-100 text-black h2 p-2">
           RESULTAT
         </h1>
@@ -43,8 +43,8 @@ export default function Result() {
         </h1>
 
         <div className="col-12 col-md-8 offset-md-2 d-flex flex-column justify-content-center align-items-end">
-          <div className="">
-            <h1 className="text-center text-md-start h6">Ditt svar:</h1>
+          <div>
+            <h1 className="text-center text-md-start h6 text-muted">Ditt svar:</h1>
           </div>
           {game &&
             answered &&
@@ -67,14 +67,14 @@ export default function Result() {
                   <div className="row align-items-center">
                     <h1 className="col-1 text-start h6">{index + 1}. </h1>
                     <h1
-                      className={`col-9 text-start text-wrap h6 ${!expand[index] ? "overflow-hidden text-truncate" : ""
+                      className={`col-8 text-start text-wrap h6 ${!expand[index] ? "overflow-hidden text-truncate" : ""
                         }`}
                     >
                       {question.question}
                     </h1>
                     {!expand[index] ? (
                       <div
-                        className={`col-1 offset-0 offset-md-2  d-flex align-items-center justify-content-center ${answered[index].correct === 1 ? "bg-success" : "bg-danger"
+                        className={`col-1 rounded offset-2 offset-md-2 d-flex align-items-center justify-content-center ${answered[index].correct === 1 ? "bg-success" : "bg-danger"
                           }`}
                       >
                         {!expand[index] && findCorrectAnswerLetter(question.answers)}

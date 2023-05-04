@@ -76,13 +76,14 @@ export default function GamePlay() {
 		<div className="vh-100 w-100 bg-white">
 			{game[currentQuestion].type === "LÄS" && (
 				<LasPopup
-					className="border border-danger"
 					questionId={game[currentQuestion].id}
 					show={showDocument}
 					onClose={() => setShowDocument(false)}
 				/>
 			)}
 			<Navbar />
+			{game[currentQuestion].type === 'LÄS' && <button className={`pt-2 absolute left-0 right-0 border bg-white mt-5 px-2 shadow-md shadow-lg mx-auto d-flex justify-content-center align-items-center ${showDocument ? "hidden" : ""}`} onClick={() => setShowDocument(!showDocument)}><p className={`h6`}>Visa text</p></button>}
+
 			<Container className="">
 				<Row className="">
 					<Col className="text-end py-2">{game[currentQuestion].type}</Col>

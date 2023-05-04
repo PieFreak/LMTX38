@@ -57,11 +57,11 @@ const LasPopup = ({ questionId, show, onClose }) => {
 
 
     return (
-        <div onClick={() => { onClose(); }} className="bg-dark position-fixed d-flex justify-content-center align-items-center w-100 h-100" style={{ opacity: 0.7 }}>
-            <div onClick={(e) => { e.stopPropagation(); }} className="border border-primary position-fixed top-3 shadow bg-white d-flex align-items-center justify-content-center">
+        <div onClick={() => { onClose(); }} className="bg-white position-fixed d-flex justify-content-center align-items-center w-100 h-100">
+            <div onClick={(e) => { e.stopPropagation(); }} className="position-fixed mt-5 shadow d-flex align-items-center justify-content-center">
                 <button onClick={() => { onClose(); }} className="btn-close position-absolute top-0 start-0 pt-1 px-1"></button>
-                <div className="mt-3 d-flex justify-content-center align-items-center mx-auto">
-                    <div className={`h-100 md:h-100 lg:h-100 pb-3 overflow-auto`}>
+                <div className="mt-5 d-flex justify-content-center align-items-center mx-auto">
+                    <div className={`pb-3`} style={{ maxHeight: '80vh', overflowY: 'scroll' }}>
                         <Document file={pdfId} onLoadSuccess={onDocumentLoadSuccess}>
                             <Page scale={scale} renderAnnotationLayer={false} renderTextLayer={false} pageNumber={1}></Page>
                             {numPages === 2 && <Page scale={scale} renderAnnotationLayer={false} renderTextLayer={false} pageNumber={2}></Page>}
@@ -70,6 +70,7 @@ const LasPopup = ({ questionId, show, onClose }) => {
                 </div>
             </div>
         </div>
+
     );
 }
 
