@@ -9,7 +9,7 @@ import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/pagination";
 import { Pagination } from "swiper";
-import {Row, Col} from "react-bootstrap"
+import { Row, Col } from "react-bootstrap"
 export default function GameOverview() {
   const [showPopup, setShowPopup] = useState(false);
   const [selectedTitle, setSelectedTitle] = useState("");
@@ -53,7 +53,7 @@ export default function GameOverview() {
   };
 
   return (
-    <div className="z-2 min-vh-100 w-100 bg-light">
+    <div className="z-2 min-vh-100 w-100 bg-white">
       <SettingPopup
         title={selectedTitle}
         text={selectedText}
@@ -138,8 +138,8 @@ export default function GameOverview() {
           KVANTITATIV
         </p>
 
-        <div className="d-none d-lg-flex flex-wrap justify-content-center mb-4 mx-md-6">
-          <div className="col-lg-6 p-lg-5">
+        <div className="w-75 d-none d-lg-flex flex-wrap justify-content-around mb-4 gap-2">
+          <div className="col-lg-5">
             <Optioncircle
               category={cat[3]}
               buttonActivate={() =>
@@ -147,7 +147,7 @@ export default function GameOverview() {
               }
             />
           </div>
-          <div className="col-lg-6 p-lg-5">
+          <div className="col-lg-5">
             <Optioncircle
               category={cat[4]}
               buttonActivate={() =>
@@ -155,7 +155,7 @@ export default function GameOverview() {
               }
             />
           </div>
-          <div className="col-lg-6 p-lg-5">
+          <div className="col-lg-5">
             <Optioncircle
               category={cat[5]}
               buttonActivate={() =>
@@ -163,7 +163,7 @@ export default function GameOverview() {
               }
             />
           </div>
-          <div className="col-lg-6 p-lg-5">
+          <div className="col-lg-5">
             <Optioncircle
               category={cat[6]}
               buttonActivate={() =>
@@ -172,6 +172,8 @@ export default function GameOverview() {
             />
           </div>
         </div>
+
+
 
         <div className={`d-lg-none w-100 mb-2`}>
           <Swiper

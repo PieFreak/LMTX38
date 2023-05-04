@@ -76,6 +76,7 @@ export default function GamePlay() {
 		<div className="vh-100 w-100 bg-white">
 			{game[currentQuestion].type === "LÄS" && (
 				<LasPopup
+					className="border border-danger"
 					questionId={game[currentQuestion].id}
 					show={showDocument}
 					onClose={() => setShowDocument(false)}

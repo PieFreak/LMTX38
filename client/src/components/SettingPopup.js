@@ -68,10 +68,10 @@ const SettingPopup = ({ title, text, show, onClose }) => {
         </div>
 
         <Button
-          variant="outline-dark px-4 py-3 mt-4 btn-lg text-danger border border-1 border-opacity-50 border-muted mx-auto mb-4 d-flex justify-content-center"
+          variant="outline-dark px-5 py-3 mt-4 btn-lg text-danger border border-1 border-opacity-50 border-muted mx-auto mb-4 d-flex justify-content-center"
           onClick={startGame}
         >
-          Start Game
+          Starta
         </Button>
       </Modal.Body>
     </Modal>

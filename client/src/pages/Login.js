@@ -1,13 +1,11 @@
-import { NavLink, useNavigate} from "react-router-dom";
-import {useState, useEffect} from "react";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 import Footer from "../components/Footer";
-import {Form, Button, Row, Col} from "react-bootstrap";
+import { Form, Button, Row, Col } from "react-bootstrap";
 import axios from "axios";
 
 export default function Login() {
   const navigate = useNavigate();
-  const delay = ms => new Promise(res => setTimeout(res, ms))
-  const [showPreload, setShowPreload] = useState(false);
   const [user, setUser] = useState(undefined);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -18,8 +16,6 @@ export default function Login() {
     try {
       const response = await axios.post('http://localhost:5000/user/login/', { email, password });
       localStorage.setItem("user", JSON.stringify(response.data));
-      setShowPreload(true);
-      await delay(2000);
       navigate('/profile')
       console.log(response.data);
     } catch (error) {
@@ -49,55 +45,54 @@ export default function Login() {
           Högskoleprovet
         </h1>
       </NavLink>
-      {showPreload ? 
-        <div className="gg-spinner d-flex"/>
-        :
-        <Form 
-          onSubmit={handleSubmit}
-          className="d-flex flex-column mt-3 mx-auto gap-1"
-        >
-          <Form.Control
-            name="username"
-            required
-            type="text"
-            placeholder="Användarnamn"
-            onChange={e => {
-              e.preventDefault();
-              setEmail(e.target.value);
+
+      <Form
+        onSubmit={handleSubmit}
+        className="d-flex flex-column mt-3 mx-auto gap-1"
+      >
+        <Form.Control
+          name="username"
+          required
+          type="text"
+          placeholder="Användarnamn"
+          onChange={e => {
+            e.preventDefault();
+            setEmail(e.target.value);
+          }}
+        />
+        <Form.Control
+          name="password"
+          required
+          type={showPassword ? "text" : "password"}
+          placeholder="Lösenord"
+          onChange={e => {
+            e.preventDefault();
+            setPassword(e.target.value);
+          }}
+        />
+        <Form.Group className="d-flex gap-1">
+          <Form.Check
+            name="show-password"
+            type="checkbox"
+            onChange={() => {
+              setShowPassword(oldShowPassword => !oldShowPassword);
             }}
           />
-          <Form.Control
-            name="password"
-            required
-            type={showPassword ? "text":"password"} 
-            placeholder="Lösenord"
-            onChange={e => {
-              e.preventDefault();
-              setPassword(e.target.value);
-            }}
-          />
-          <Form.Group className="d-flex gap-1">
-            <Form.Check
-              name="show-password"
-              type="checkbox"
-              onChange={() =>{
-                setShowPassword(oldShowPassword => !oldShowPassword);
-              }}
-            />
-            <Form.Label>Visa Lösenord</Form.Label>
-          </Form.Group>
-            <Button type="submit">Logga in</Button>
-            <Button onClick={e => {
-              e.preventDefault();
-              navigate("/register");
-            }}>
-              Skapa Konto
-            </Button>
-        </Form>
-        // <form onSubmit={handleSubmit} className="flex flex-col gap-2 mx-2 w-40 md:w-60 my-10 md:my-4">
+          <Form.Label>Visa Lösenord</Form.Label>
+        </Form.Group>
+        <Button type="submit">Logga in</Button>
+        <Button onClick={e => {
+          e.preventDefault();
+          navigate("/register");
+        }}>
+          Skapa Konto
+        </Button>
+      </Form>
+      
+        {/* // <form onSubmit={handleSubmit} className="flex flex-col gap-2 mx-2 w-40 md:w-60 my-10 md:my-4">
         //   <input
         //     name="username"
-        //     className="p-1" 
+        //     className="p-1"
         //     type="text"
         //     autoFocus
         //     placeholder="Användarnamn"
@@ -135,11 +130,10 @@ export default function Login() {
         //   }}>
         //     Skapa Konto
         //   </button>
-        // </form>
-        }
-      <Footer/>
+        // </form> */}
+        
+      <Footer />
     </div>
-    )
-  }
+  )
+}
 
-  
