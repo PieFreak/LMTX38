@@ -80,18 +80,7 @@ export default function GameOverview() {
             <SwiperSlide><Optioncircle className=""category={cat[5]} buttonActivate={()=> handleButtonClick(cat[5].title, cat[5].text)}/></SwiperSlide>
             <SwiperSlide><Optioncircle className=""category={cat[6]} buttonActivate={()=> handleButtonClick(cat[6].title, cat[6].text)}/></SwiperSlide>
           </Swiper>
-          </div>
-          
-      </div>
-
-      <div className="w-full h-96 mx-auto bg-[#1d807975] mb-2">
-          <h1 className="mt-2 pt-8 mb-4 flex justify-center items-center w-full 
-                        text-white text-xl md:text-3xl p-2">FÖRFRÅGNINGAR</h1>
-      </div>
-
-      <div className="w-full h-96 mx-auto bg-[#b2991b81]  mb-2">
-          <h1 className="mt-2 pt-8 mb-16 flex justify-center items-center w-full 
-                        text-white text-xl md:text-3xl p-2">RESULTAT</h1>
+          </div>  
       </div>
       <Footer/>
     </div>

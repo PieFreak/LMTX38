@@ -7,7 +7,7 @@ const SettingPopup = ({ title, text, show, onClose }) => {
 
     const navigate = useNavigate();
 
-    const [selectedButton, setSelectedButton] = useState(20);
+    const [selectedButton, setSelectedButton] = useState(10);
 
     const handleAmountOption = (amount) => {
         setSelectedButton(amount);
@@ -20,7 +20,6 @@ const SettingPopup = ({ title, text, show, onClose }) => {
                 questionType: title,
                 questionAmount: amount
             });
-            /* console.log(response.data); */
             navigate('/gameplay', { state: { game: response.data } });
         } catch (error) {
             console.error(error.response.data);
@@ -30,9 +29,9 @@ const SettingPopup = ({ title, text, show, onClose }) => {
     if (!show) return null
 
     return (
-        <div onClick={() => { onClose(); setSelectedButton(20); }} className="bg-gray-800 bg-opacity-30 fixed flex justify-center items-center w-full h-full">
+        <div onClick={() => { onClose(); setSelectedButton(10); }} className="bg-gray-800 bg-opacity-30 fixed flex justify-center items-center w-full h-full">
             <div onClick={(e) => { e.stopPropagation(); }} className="w-[16rem] border-4 border-teal-400 md:mx-auto lg:mx-auto md:w-[36rem] lg:w-[40rem] max-w-3xl top-20 md:top-56 shadow-2xl shadow-black h-auto md:h-96 bg-gradient-to-b from-white via-[#f2edf1] to-indigo-50 fixed flex items-center justify-center">
-                <button onClick={() => { onClose(); setSelectedButton("20"); }} className="absolute top-0 left-0 pt-1 px-2 hover:bg-teal-200 hover:shadow-inner">X</button>
+                <button onClick={() => { onClose(); setSelectedButton("10"); }} className="absolute top-0 left-0 pt-1 px-2 hover:bg-teal-200 hover:shadow-inner">X</button>
                 <div className="h-full">
                     <h1 className="text-2xl mt-6 mb-4 text-center">{title}</h1>
                     <h3 className="text-sm md:text-lg mx-4 md:mx-20 mb-4 md:mb-8 text-center">{text}</h3>

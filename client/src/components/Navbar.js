@@ -6,7 +6,7 @@ export default function Navbar() {
   const [user, setUser] = useState(undefined);
   let links = [
     {title:"Start", link:"/gameoverview"},
-    {title:"Om 'namn'", link:"/about"},
+    {title:"Om högskoleprovet", link:"/about"},
     {title:"Profil", link:"/profile"},
   ]
   const  [open, setOpen] = useState(false);
