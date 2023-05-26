@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2023-05-26T12:48:05.606Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36" etag="8w2strgv6hKsIG5FuQXu" version="21.3.4" type="github" pages="2">
+<mxfile host="app.diagrams.net" modified="2023-05-26T12:48:40.947Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36" etag="KUbAh7_R5tz0HMv2hQee" version="21.3.4" type="github" pages="2">
   <diagram name="Model-uml" id="Os3DSgaBkLGRmt94mTsT">
     <mxGraphModel dx="1263" dy="705" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -296,15 +296,6 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="v9I0oHw99aB_vnOFNZuP-3" value="ID" style="ellipse;whiteSpace=wrap;html=1;align=center;fontStyle=4;" vertex="1" parent="1">
-          <mxGeometry x="415" y="340" width="75" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="v9I0oHw99aB_vnOFNZuP-4" value="" style="endArrow=none;html=1;rounded=0;exitX=1;exitY=0;exitDx=0;exitDy=0;entryX=0.25;entryY=1;entryDx=0;entryDy=0;" edge="1" source="v9I0oHw99aB_vnOFNZuP-3" target="v9I0oHw99aB_vnOFNZuP-9" parent="1">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="880" y="205" as="sourcePoint" />
-            <mxPoint x="1040" y="205" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
         <mxCell id="v9I0oHw99aB_vnOFNZuP-5" value="date" style="ellipse;whiteSpace=wrap;html=1;align=center;" vertex="1" parent="1">
           <mxGeometry x="610" y="340" width="75" height="30" as="geometry" />
         </mxCell>
@@ -337,7 +328,7 @@
         <mxCell id="v9I0oHw99aB_vnOFNZuP-9" value="RoundChallenge" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;align=center;shadow=0;" vertex="1" parent="1">
           <mxGeometry x="500" y="290" width="100" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="v9I0oHw99aB_vnOFNZuP-10" value="&lt;u&gt;user_id&lt;/u&gt;" style="ellipse;whiteSpace=wrap;html=1;align=center;" vertex="1" parent="1">
+        <mxCell id="v9I0oHw99aB_vnOFNZuP-10" value="opponent" style="ellipse;whiteSpace=wrap;html=1;align=center;" vertex="1" parent="1">
           <mxGeometry x="475" y="360" width="75" height="30" as="geometry" />
         </mxCell>
         <mxCell id="v9I0oHw99aB_vnOFNZuP-11" value="score" style="ellipse;whiteSpace=wrap;html=1;align=center;" vertex="1" parent="1">
