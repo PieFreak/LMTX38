@@ -2,7 +2,7 @@ import {useEffect, useState} from 'react';
 
 
 export default function Sidebar({sideItems}) {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
   const [rounds, setRounds] = useState();
   const [completeRounds, setCompleteRounds] = useState();
 

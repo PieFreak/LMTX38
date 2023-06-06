@@ -18,8 +18,8 @@ export default function Login() {
       const response = await axios.post('http://localhost:5000/user/login/', { email, password });
       localStorage.setItem("user", JSON.stringify(response.data));
       setShowPreload(true);
-      await delay(2000);
-      navigate('/profile')
+      await delay(500);
+      navigate('/gameoverview')
       console.log(response.data);
     } catch (error) {
       console.error(error.message);
@@ -39,9 +39,9 @@ export default function Login() {
         <a href="/">Go back</a>
       </div>
     :
-    <div className="min-h-screen flex flex-col justify-center items-center bg-indigo-50">
+    <div className="min-h-screen flex flex-col justify-center items-center bg-white">
       <NavLink to="/" className="md:mt-8 mt-16 mb-16">
-        <h1 className="py-2 text-center font-extrabold text-transparent bg-gradient-to-r bg-clip-text from-green-400 to-indigo-400 text-4xl md:text-6xl">
+        <h1 className="py-2 text-center font-semibold text-blue-500 text-2xl md:text-5xl">
           Högskoleprovet
         </h1>
       </NavLink>
@@ -49,7 +49,7 @@ export default function Login() {
         <form onSubmit={handleSubmit} className="flex flex-col gap-2 mx-2 w-40 md:w-60 my-10 md:my-4">
           <input
             name="username"
-            className="p-1" 
+            className="p-1 border-2 rounded-sm" 
             type="text"
             autoFocus
             placeholder="Användarnamn"
@@ -60,7 +60,7 @@ export default function Login() {
           />
           <input 
             name="password"
-            className="p-1" 
+            className="p-1 border-2 rounded-sm" 
             type={showPassword ? "text":"password"} 
             placeholder="Lösenord" 
             onChange={e => {
@@ -78,10 +78,10 @@ export default function Login() {
             />
             <label className="text-xs" htmlFor="show-password">Visa Lösenord</label>
           </div>
-          <button type="submit" className="shadow-xl p-1 bg-indigo-100 hover:bg-indigo-200 border-2 border-indigo-200 text-indigo-800">
+          <button type="submit" className="rounded-md shadow-xl p-1 bg-blue-500 hover:bg-blue-300 text-white">
             Logga in
           </button>
-          <button className="shadow-xl p-1 bg-indigo-100 hover:bg-indigo-200 border-2 border-indigo-200 text-indigo-800" onClick={e => {
+          <button className="rounded-md shadow-xl p-1 bg-blue-500 hover:bg-blue-300 text-white" onClick={e => {
             e.preventDefault();
             navigate("/register")
           }}>

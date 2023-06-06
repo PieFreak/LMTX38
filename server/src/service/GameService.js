@@ -34,7 +34,7 @@ import { dbInit } from '../database/database.js';
  * @since 2023-03-23
  */
 class GameService {
-    
+
     /**
      * @async
      * @function initiateGame
@@ -47,7 +47,7 @@ class GameService {
         const connection = await dbInit();
         try {
             const [questions] = await connection.query(`
-            SELECT q.id, q.question, q.type, JSON_ARRAYAGG(JSON_OBJECT('answer',qa.answer,'correct', qa.correct)) answers
+            SELECT q.id, q.question, q.type, JSON_ARRAYAGG(JSON_OBJECT('answer',a.answer,'correct', a.correct)) answer
             FROM (
                 SELECT *
                 FROM question
@@ -55,9 +55,10 @@ class GameService {
                 ORDER BY RAND()
                 LIMIT ?
             ) q
-            JOIN questionanswer qa ON q.id = qa.question
-            GROUP BY id, question, type`,
-            [questionType, questionAmount]
+            JOIN answer a ON q.id = a.question
+            GROUP BY q.id, q.question, q.type`,
+
+                [questionType, questionAmount]
             );
             return questions;
         } catch (error) {
@@ -82,15 +83,15 @@ class GameService {
         const id = uuidv4();
         try {
             await connection.query(`
-            INSERT INTO round (id, owner, ownerscore, date)
+            INSERT INTO round (id, user, score, date)
             VALUES (?, ?, ?, NOW())`,
-            [id, user, score]
+                [id, user, score]
             );
             for (const question of questions) {
                 await connection.query(`
                 INSERT INTO roundquestion (roundid, questionid)
                 VALUES (?, ?)`,
-                [id, question]
+                    [id, question]
                 );
             }
             return id;
@@ -113,7 +114,7 @@ class GameService {
         const connection = await dbInit();
         try {
             const [round] = await connection.query(`
-            SELECT r.id, r.owner, r.ownerscore, r.date, JSON_ARRAYAGG(rq.questionid) AS questions
+            SELECT r.id, r.user, r.score, r.date, JSON_ARRAYAGG(rq.questionid) AS questionIds
             FROM (
                 SELECT *
                 FROM round
@@ -122,8 +123,26 @@ class GameService {
             ) r
             JOIN roundquestion rq ON r.id = rq.roundid
             GROUP BY r.id`,
-            [id]
+                [id]
             );
+
+            // Fetch the details for each question in the round
+            const questions = [];
+            for (const questionId of round[0].questionIds) {
+                const [question] = await connection.query(`
+                SELECT q.id, q.question, q.type, JSON_ARRAYAGG(JSON_OBJECT('answer',a.answer,'correct', a.correct)) answer
+                FROM question q
+                JOIN answer a ON q.id = a.question
+                WHERE q.id = (?)
+                GROUP BY q.id, q.question, q.type`,
+                    [questionId]
+                );
+                questions.push(question[0]);
+            }
+
+            // Replace the 'questionIds' field with the fetched question details
+            round[0].questions = questions;
+
             return round[0];
         } catch (error) {
             console.error(error);
@@ -133,27 +152,19 @@ class GameService {
         }
     }
 
-    /**
-     * @async
-     * @function saveCompletedRound
-     * @param {string} user the ID of user completing the round
-     * @param {string} round the ID of the round being completed
-     * @param {number} score the score of the user got when answering the questions in the round
-     * @returns {Promise<boolean>} if the new completed round was created
-     * @description saves a completed round in the database
-     */
-    async saveCompleteRound(user, round, score) {
+
+    async saveRoundChallenge(user, questions, roundID, score) {
         const connection = await dbInit();
         try {
             await connection.query(`
-            INSERT INTO completeround (round, opponent, opponentscore, date)
+            INSERT INTO roundchallenge (id, opponent, opponentscore, date)
             VALUES (?, ?, ?, NOW())`,
-            [round, user, score]
+                [roundID, user, score]
             );
-            return true;
+            return roundID;
         } catch (error) {
-            console.error(error);
-            return false;
+            console.error(error)
+            return undefined;
         } finally {
             connection.end();
         }

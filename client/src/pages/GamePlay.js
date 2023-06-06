@@ -10,6 +10,9 @@ export default function GamePlay() {
 	const navigate = useNavigate();
 	const location = useLocation();
 	const game = location.state.game;
+	const creator = location.state.creator;
+	const isNewGame = location.state.isNewGame;
+	const roundID = location.state.roundID;
 	const [currentQuestion, setCurrentQuestion] = useState(0);
 	const [selectedAnswers, setSelectedAnswers] = useState(Array(game.length).fill(undefined));
 	const [showResultButton, setShowResultButton] = useState(false);
@@ -55,25 +58,52 @@ export default function GamePlay() {
 		try {
 			const score = selectedAnswers.filter(answer => answer.correct).length;
 			const questionIDs = game.map(question => question.id);
-			const response = await axios.post('http://localhost:5000/game/round/', {
-				questions: questionIDs, score: score
+
+			const url = isNewGame
+				? 'http://localhost:5000/game/round/'
+				: 'http://localhost:5000/game/round/complete/';
+
+			let requestBody = {
+				questions: questionIDs,
+				score: score
+			};
+
+			if (!isNewGame && roundID) {
+				requestBody = {
+					...requestBody,
+					roundID: roundID
+				};
+			}
+
+			const response = await axios.post(url, requestBody);
+			console.log(response.data);
+
+			navigate('/result', {
+				state: {
+					roundID: response.data,
+					answered: selectedAnswers,
+					game: game,
+					score: score,
+					creatorUser: creator?.user,
+					creatorScore: creator?.score
+				}
 			});
-			/* console.log(response.data); */
-			navigate('/result', { state: { roundID: response.data, answered: selectedAnswers, game: game, score: score } });
 		} catch (error) {
 			console.error(error.message);
 		}
 	};
 
+
+
 	const [showDocument, setShowDocument] = useState(false);
 
 	useEffect(() => {
 		document.body.style.overflowY = showDocument ? 'auto' : 'unset';
-	  }, [showDocument]);
+	}, [showDocument]);
 
 	return (
 		<div className="min-h-screen w-full bg-white">
-			{game[currentQuestion].type === 'LÄS' && (<LasPopup questionId ={game[currentQuestion].id} show={showDocument} onClose={() => setShowDocument(false)} />)}
+			{game[currentQuestion].type === 'LÄS' && (<LasPopup questionId={game[currentQuestion].id} show={showDocument} onClose={() => setShowDocument(false)} />)}
 			<Navbar />
 			<div className="w-full mx-auto">
 				{game[currentQuestion].type === 'LÄS' && <button className={`absolute left-0 right-0 w-fit border-b-2 border-r-2 border-indigo-200 bg-white md:py-0.5 mt-6 md:mt-8 px-2 shadow-md shadow-gray-500 mx-auto flex justify-start items-center ${showDocument ? "hidden" : ""}`} onClick={() => setShowDocument(!showDocument)}><p className={`text-[0.7rem] md:text-base`}>Visa text</p></button>}
@@ -82,7 +112,7 @@ export default function GamePlay() {
 				<h1 className={`w-[15rem] md:w-[30rem] mx-auto text-xs text-center pt-6 md:pt-20 mb-2 h-[6rem] md:h-[12rem]`}>{game[currentQuestion].question}</h1>
 
 				<div className="w-full px-2 md:w-[30rem] mx-auto h-[12rem]">
-					{game[currentQuestion].answers.map((answer, index) => {
+					{game[currentQuestion].answer.map((answer, index) => {
 
 						return (
 							<button

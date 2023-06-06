@@ -20,7 +20,8 @@ const SettingPopup = ({ title, text, show, onClose }) => {
                 questionType: title,
                 questionAmount: amount
             });
-            navigate('/gameplay', { state: { game: response.data } });
+            console.log(response.data);
+            navigate('/gameplay', { state: { game: response.data, isNewGame: true } }); 
         } catch (error) {
             console.error(error.response.data);
         }

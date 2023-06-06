@@ -67,7 +67,7 @@ export default function Profile() {
                   <div key={round.id} className="border rounded-md p-2">
                     <div className="flex justify-between">
                       <span className="text-sm">{`ID: ${round.id.substring(0, 5)}...`}</span>
-                      <span className="text-sm">{`Poäng: ${round.ownerscore}`}</span>
+                      <span className="text-sm">{`Poäng: ${round.score}`}</span>
                     </div>
                     <div className="text-sm">{`Datum: ${day}/${month}/${year}`}</div>
                   </div>

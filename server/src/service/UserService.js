@@ -214,14 +214,15 @@ class UserService {
         const connection = await dbInit();
         try {
             const [rounds] = await connection.query(`
-            SELECT r.id, r.owner, r.ownerscore, r.date, JSON_ARRAYAGG(JSON_OBJECT('opponent', cr.opponent, 'opponentscore', cr.opponentscore, 'date', cr.date)) completerounds
+            SELECT r.id, r.user, r.score, r.date, JSON_ARRAYAGG(JSON_OBJECT('opponent', cr.opponent, 'opponentscore', cr.opponentscore, 'date', cr.date)) roundchallenge
             FROM (
                 SELECT *
                 FROM round 
-                WHERE owner = (?)
+                WHERE user = (?)
             ) r
-            LEFT JOIN completeround cr ON r.id = cr.round
-            GROUP BY r.id`,
+            LEFT JOIN roundchallenge cr ON r.id = cr.id
+            GROUP BY r.id, r.user, r.score, r.date`,
+            
             [user]
             );
             return rounds;
@@ -244,13 +245,14 @@ class UserService {
         const connection = await dbInit();
         try {
             const [completedrounds] = await connection.query(`
-            SELECT r.id, r.owner, r.ownerscore, r.date rounddate, cr.opponent, cr.opponentscore, cr.date completerounddate
+            SELECT r.id, r.user, r.score, r.date AS rounddate, cr.opponent, cr.opponentscore, cr.date AS roundchallengedate
             FROM round r
             RIGHT JOIN (
                 SELECT *
-                FROM completeround
+                FROM roundchallenge
                 WHERE opponent = (?)
-            ) cr ON r.id = cr.round`,
+            ) cr ON r.id = cr.id`,
+            
             [user]
             );
             return completedrounds;
