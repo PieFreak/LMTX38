@@ -50,7 +50,7 @@ export default function Profile() {
       <Sidebar sideItems={[{ id: "user", title: "Användare" }, { id: "rounds", title: "Egna rundor" }, { id: "completerounds", title: "Gästrundor" }]} />
       <Navbar />
       <div className="flex">
-        <div className="flex flex-col md:mx-auto my-5 mx-2 mt-16 p-5 bg-gray-100 border-2 border-gray-200 shadow-2xl w-[20rem] rounded-md">
+        <div className="flex flex-col md:mx-auto my-5 mx-2 mt-16 p-5 bg-gray-100 border-2 border-gray-200 shadow-2xl w-[30rem] rounded-md">
           <div className="border-b-2 border-indigo-900 mb-5 pb-2">
             <h2 id="user" className="text-lg mb-1">Användare</h2>
             <p className="text-xs">Du är inloggad som {user.username}</p>
@@ -64,19 +64,40 @@ export default function Profile() {
                 const month = jsDate.getMonth() + 1;
                 const year = jsDate.getFullYear();
                 return (
-                  <div key={round.id} className="border rounded-md p-2">
+                  <div key={round.id} className="flex flex-col border rounded-md p-2 gap-1">
                     <div className="flex justify-between">
                       <span className="text-sm">{`ID: ${round.id.substring(0, 5)}...`}</span>
-                      <span className="text-sm">{`Poäng: ${round.score}`}</span>
                     </div>
-                    <div className="text-sm">{`Datum: ${day}/${month}/${year}`}</div>
+                    <div className="flex justify-between">
+                      <span className="text-sm text-left">{`Poäng: ${round.score}`}</span>
+                      <span className="text-sm text-right">{`Spelades: ${day}/${month}/${year}`}</span>
+                    </div>
                   </div>
                 )
               })}
             </div>
           </div>
-          <div className="border-b-2 border-indigo-900 mb-5 pb-2">
+          <div className="flex flex-col gap-1 border-b-2 border-indigo-900 mb-5 pb-2">
             <h2 id="completerounds" className="text-lg mb-1">Gästrundor</h2>
+            {completeRounds && completeRounds.map(round => {
+              const yourDate = new Date(round.roundchallengedate);
+              const opponentsDate = new Date(round.rounddate);
+              return (
+                <div key={round.id} className="flex flex-col border rounded-md p-2 gap-1">
+                  <div className="flex justify-between">
+                    <span className="text-sm">{`ID: ${round.id.substring(0, 5)}...`}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-sm text-left">{`Dina poäng: ${round.opponentscore}`}</span>
+                    <span className="text-sm text-right">{`Spelades: ${yourDate.getDate()}/${yourDate.getMonth()+1}/${yourDate.getFullYear()}`}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-sm text-left">{`Motståndare poäng: ${round.score}`}</span>
+                    <span className="text-sm text-right">{`Spelades: ${opponentsDate.getDate()}/${opponentsDate.getMonth()+1}/${opponentsDate.getFullYear()}`}</span>
+                  </div>
+                </div>
+              )
+            })}
           </div>
         </div>
       </div>

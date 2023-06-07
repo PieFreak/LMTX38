@@ -245,13 +245,13 @@ class UserService {
         const connection = await dbInit();
         try {
             const [completedrounds] = await connection.query(`
-            SELECT r.id, r.user, r.score, r.date AS rounddate, cr.opponent, cr.opponentscore, cr.date AS roundchallengedate
+            SELECT r.id, r.user, r.score, r.date AS rounddate, rc.opponent, rc.opponentscore, rc.date AS roundchallengedate
             FROM round r
             RIGHT JOIN (
                 SELECT *
                 FROM roundchallenge
                 WHERE opponent = (?)
-            ) cr ON r.id = cr.id`,
+            ) rc ON r.id = rc.id`,
             
             [user]
             );
