@@ -48,11 +48,11 @@ export default function Login() {
       { !showPreload ? 
         <form onSubmit={handleSubmit} className="flex flex-col gap-2 mx-2 w-40 md:w-60 my-10 md:my-4">
           <input
-            name="username"
+            name="email"
             className="p-1 border-2 rounded-sm" 
             type="text"
             autoFocus
-            placeholder="Användarnamn"
+            placeholder="E-post"
             onChange={e => {
               e.preventDefault();
               setEmail(e.target.value);

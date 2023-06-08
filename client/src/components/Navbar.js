@@ -1,8 +1,9 @@
-import { NavLink, } from "react-router-dom"
+import { NavLink, useNavigate } from "react-router-dom"
 import { useState, useEffect } from "react";
 import axios from "axios";
 
 export default function Navbar() {
+  const navigate = useNavigate();
   const [user, setUser] = useState(undefined);
   let links = [
     {title:"Start", link:"/gameoverview"},
@@ -52,6 +53,7 @@ export default function Navbar() {
               console.log(response);
               localStorage.clear();
               setUser(undefined);
+              navigate("/");
             } catch (err) {
               console.log(err.message);
             }
