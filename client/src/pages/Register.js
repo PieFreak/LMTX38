@@ -54,7 +54,7 @@ export default function Register() {
   return (
     <>
     {isSubmitted ? (
-      <div className="min-h-screen flex flex-col justify-center items-center bg-indigo-50">
+      <div className="min-h-screen flex flex-col justify-center items-center bg-white">
         <div>
           <p className="py-2 text-center  text-base md:text-2xl">Registrering lyckades!</p>
           <NavLink to="/login">
@@ -65,16 +65,16 @@ export default function Register() {
         </div>
       </div>
       ) : (
-    <div className="min-h-screen flex flex-col justify-center items-center bg-indigo-50">
+    <div className="min-h-screen flex flex-col justify-center items-center bg-white">
       <NavLink to="/" className="md:mt-8 mt-16 mb-16">
-        <h1 className="py-2 text-center font-extrabold text-transparent bg-gradient-to-r bg-clip-text from-green-400 to-indigo-400 text-4xl md:text-6xl">
+        <h1 className="py-2 text-center font-extrabold text-blue-500 text-2xl md:text-5xl">
           Högskoleprovet
         </h1>
       </NavLink>
       <form onSubmit={handleSubmit} className="flex flex-col gap-2 mx-2 w-40 md:w-60 my-10 md:my-4">
         <input
           name="epost"
-          className="p-1" 
+          className="p-1 border-2 rounded-sm"
           type="text"
           autoFocus
           required
@@ -87,7 +87,7 @@ export default function Register() {
         {emailError && <span className="text-xs text-red-700"> {emailError} </span>}
         <input
           name="username"
-          className="p-1" 
+          className="p-1 border-2 rounded-sm" 
           type="text"
           required
           placeholder="Användarnamn"
@@ -99,7 +99,7 @@ export default function Register() {
         {usernameError && <span className="text-xs text-red-700"> {usernameError} </span>}
         <input 
           name="password"
-          className="p-1" 
+          className="p-1 border-2 rounded-sm" 
           type={showPassword ? "text":"password"} 
           required
           placeholder="Lösenord" 
@@ -110,7 +110,7 @@ export default function Register() {
         />
         <input 
           name="password"
-          className="p-1" 
+          className="p-1 border-2 rounded-sm" 
           type={showPassword ? "text":"password"}
           required
           placeholder="Bekräfta Lösenord" 
@@ -130,7 +130,7 @@ export default function Register() {
           />
           <label className="text-xs" htmlFor="show-password">Visa Lösenord</label>
         </div>
-        <button type="submit" className="shadow-xl p-1 bg-indigo-100 hover:bg-indigo-200 border-2 border-indigo-200 text-indigo-800">
+        <button type="submit" className="rounded-md shadow-xl p-1 bg-blue-500 hover:bg-blue-300 text-white">
           Skapa Konto
         </button>
       </form>

@@ -22,10 +22,10 @@ export default function About() {
                 <h1 className="md:mt-16 mt-12 mb-4 py-2 text-center text-black text-xl md:text-3xl">
                     Om Högskoleprovet
                 </h1>
-                <p className="mx-4 md:mx-32 md:text-base text-sm text-center max-w-[60rem]">Högskoleprovet består av åtta delprov som testar dina kunskaper inom olika områden.
-                    Antalet uppgifter är 160 varav 80 är kvantitativa och innehåller matematiska uppgifter
-                    och uppgifter som kräver logiskt och analytiskt tänkande och 80 är verbala frågor
-                    som bland annat innehåller texter, ord och läsförståelse.</p>
+                <p className="mx-4 md:mx-32 md:text-base text-sm text-center max-w-[60rem]">Högskoleprovet består av fem delprov.
+                    Totalt är det 160 uppgifter fördelat på 8 kategorier. 80 av dem är kvantitativa och innehåller matematiska uppgifter
+                    som kräver logiskt och analytiskt tänkande, och de andra 80 frågorna är verbala
+                    och innehåller meningskomplettering, ordförståelse och läsförståelse.</p>
                 <h1 className="mt-32 mb-6 pb-2 text-center md:text-2xl text-base">Högskoleprovets 8 delar:</h1>
                 <ul className="mx-2 md:mx-36 grid grid-cols-1 grid-rows-8 mt-4 mb-12 p-1 gap-2">{
                     questionInfoPages.map(({ title, info }) => (
@@ -41,7 +41,7 @@ export default function About() {
                 <p className="mx-4 md:mx-32 md:text-base text-xs text-center max-w-[50rem] mb-12 text-gray-500">
                     Syftet med detta projekt är att kunna tävla mot andra användare på frågor från högskoleprovets
                     olika delar. Applikationen ska vara ett hjälpmedel för de som vill öva
-                    inför högskoleprovet tillsammans med andra på ett roligt sätt!
+                    inför högskoleprovet tillsammans med andra.
                 </p>
             </div>
             <Footer />

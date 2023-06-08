@@ -58,7 +58,7 @@ export default function Result() {
                 }
                 <div className="flex flex-col justify-center items-center text-white">
                     <div className="w-[16rem] md:w-[36rem] grid grid-cols-7">
-                        <h1 className="text-center font-extralight col-start-7 col-end-8 text-black text-[0.6rem] md:text-xs">Ditt svar</h1>
+                        <h1 className="text-center font-extralight col-start-7 col-end-8 text-black text-[0.6rem] md:text-xs">Svar:</h1>
                     </div>
                     {game && answered && game.map((question, index) => {
                         return (

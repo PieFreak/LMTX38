@@ -70,7 +70,7 @@ export default function Login() {
           />
           <div className="flex px-2 gap-2">
             <input
-            name="show-password"
+            id="show-password"
             type="checkbox"
             onChange={e => {
               setShowPassword(!showPassword);
